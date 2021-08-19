@@ -1,0 +1,14 @@
+.navbar__logo {
+  font-weight: 600;
+}
+
+.navbar__span {
+  color: #ffffff;
+  font-size: 1.25rem;
+}
+
+.navbar__username {
+  margin-left: 13px;
+  font-size: 1.25rem;
+  color: #ffffff;
+}

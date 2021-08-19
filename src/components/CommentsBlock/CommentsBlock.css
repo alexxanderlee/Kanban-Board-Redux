@@ -1,0 +1,38 @@
+.card-comments {
+  margin-top: 30px;
+}
+
+.comment-form {
+  margin-top: 10px;
+  padding: 10px 10px;
+  border-radius: 10px;
+  background-color: #F4F6F8;
+  display: flex;
+  align-items: flex-start;
+}
+
+.comment-form__input {
+  display: block;
+  flex: 1;
+  min-height: 6rem;
+  margin-right: 10px;
+  padding: 8px 14px;
+  background: #FFFFFF;
+  border: 1px solid #cfcfcf;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.comment-form__btn {
+  padding: 8px 25px;
+  border-radius: 4px;
+  font-weight: 500;
+  border: none;
+  transition: background-color 0.2s;
+  background-color: #4daad5;
+  color: #FFFFFF;
+}
+
+.comment-form__btn:hover {
+  background-color: #4995c7;
+}
