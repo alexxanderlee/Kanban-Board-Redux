@@ -10,8 +10,8 @@ export interface ColumnsState {
 }
 
 interface EditTitlePaylaod {
-  columnId: 'string';
-  newTitle: 'string';
+  columnId: string;
+  newTitle: string;
 }
 
 const initialState: ColumnsState = {
