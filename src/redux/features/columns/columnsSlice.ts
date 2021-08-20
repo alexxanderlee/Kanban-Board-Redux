@@ -39,9 +39,15 @@ const columnsSlice = createSlice({
   name: 'columns',
   initialState,
   reducers: {
-    addColumn: (state, action: PayloadAction<IColumn>) => {
-      const newColumn: IColumn = action.payload;
-      state.items.push(newColumn);
+    addColumn: {
+      reducer: (state, action: PayloadAction<IColumn>) => {
+        const newColumn: IColumn = action.payload;
+        state.items.push(newColumn);
+      },
+      prepare: (title: string) => {
+        const id = Date.now().toString(16);
+        return { payload: { id, title } }
+      }
     },
     deleteColumn: (state, action: PayloadAction<string>) => {
       const columnId: string = action.payload;
