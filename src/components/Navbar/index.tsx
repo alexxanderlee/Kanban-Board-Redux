@@ -1,7 +1,7 @@
 import './Navbar.css';
 
 interface NavbarProps {
-  username: string
+  username: string;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ username }) => {

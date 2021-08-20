@@ -3,20 +3,22 @@ import './App.css';
 import { Navbar, Column, Popup, CardPopup } from './components';
 import { IState, ICard } from './interfaces';
 import { initalState } from './data';
+import { useAppSelector } from './redux/store';
+import { userSelectors } from './redux/features/user';
 
 const App: React.FC = () => {
+  const username = useAppSelector(userSelectors.getUserName);
+
   const [state, setState] = useState<IState>(initalState);
-  const [username, setUsername] = useState<string>('');
   const [cardData, setCardData] = useState<ICard | null>(null);
   const [showCardPopup, setShowCardPopup] = useState<boolean>(false);
 
   return (
     <div className="App">
-      <Popup setUsername={setUsername} />
-      {showCardPopup && cardData && (
+      {!username && <Popup />}
+      {showCardPopup && cardData && username && (
         <CardPopup 
           data={cardData}
-          username={username}
           columnTitle={state[cardData.columnId].title}
           setShowCardPopup={setShowCardPopup}
           setState={setState}
@@ -32,7 +34,6 @@ const App: React.FC = () => {
             setState={setState}
             setShowCardPopup={setShowCardPopup}
             setCardPopupData={setCardData}
-            username={username}
             key={key}
           />
         ))}

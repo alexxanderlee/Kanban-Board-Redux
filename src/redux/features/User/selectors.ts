@@ -1,5 +1,3 @@
-import { ReduxState } from '../../store';
+import { RootState } from '../../store';
 
-export const getUserName = (state: ReduxState) => state.user.username;
-
-export const isLoggedIn = (state: ReduxState) => state.user.isLoggedIn;
+export const getUserName = (state: RootState) => state.user.username;

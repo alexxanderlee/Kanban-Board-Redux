@@ -1,10 +1,10 @@
 import userReducer from './userSlice';
 
-import * as userOperations from './operations';
+import { userActions } from './userSlice';
 import * as userSelectors from './selectors';
 
 export {
-  userOperations,
+  userActions,
   userSelectors,
 };
 
