@@ -1,9 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-export interface IColumn {
-  id: string;
-  title: string;
-}
+import { IColumn } from '../../../interfaces';
 
 export interface ColumnsState {
   items: IColumn[];

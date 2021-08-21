@@ -1,23 +1,19 @@
 import React, { useState, useRef } from 'react';
-import './Column.css';
-import { Card, QuickInput } from '../../components';
-// import { IState, IColumn, ICard } from '../../interfaces';
-import { useAppSelector, useAppDispatch } from '../../redux/store';
-import { userSelectors } from '../../redux/features/user';
-import { columnsActions } from '../../redux/features/columns';
-import setDate from 'date-fns/fp/setDate';
+import './Item.css';
+import { QuickInput } from '../../../components';
+import { useAppDispatch } from '../../../redux/store';
+import { columnsActions } from '../../../redux/features/columns';
 
-interface ColumnProps {
+interface ColumnItemProps {
   id: string;
   title: string;
 }
 
-const Column: React.FC<ColumnProps> = ({ id, title }) => {
+const ColumnItem: React.FC<ColumnItemProps> = ({ id, title }) => {
   const dispatch = useAppDispatch();
-  const username = useAppSelector(userSelectors.getUserName);
 
-  const [addCardVisible, setAddCardVisible] = useState<boolean>(false);
   const [editTitleVisible, setEditTitleVisible] = useState<boolean>(false);
+  const [addCardVisible, setAddCardVisible] = useState<boolean>(false);
   const addCardInputRef = useRef<HTMLTextAreaElement>(null);
 
   function titleOnSubmit(value: string): void {
@@ -39,39 +35,6 @@ const Column: React.FC<ColumnProps> = ({ id, title }) => {
       dispatch(columnsActions.deleteColumn(id));
     }
   }
-
-  // function onAddCard(event: React.MouseEvent): void {
-  //   event.preventDefault();
-  //   const value: string = addCardInputRef.current!.value;
-  //   if (isEmptyStr(value)) {
-  //     return;
-  //   }
-  //   const card: ICard = {
-  //     id: Date.now().toString(16),
-  //     columnId: id,
-  //     author: username,
-  //     title: value,
-  //     descr: null,
-  //     comments: []
-  //   };
-  //   const newCards: ICard[] = [...cards, card];
-  //   updateColumn('cards', newCards);
-  //   setAddCardVisible(false);
-  // }
-
-  // function onDeleteCard(cardId: string): void {
-  //   const newCards: ICard[] = [...cards].filter(card => !(cardId === card.id));
-  //   updateColumn('cards', newCards);
-  // }
-
-  // function updateColumn<T extends keyof IColumn>(key: T, value: IColumn[T]): void {
-  //   setState(prevState => {
-  //     const newState: IState = { ...prevState };
-  //     newState[id][key] = value;
-  //     localStorage.setItem('state', JSON.stringify(newState));
-  //     return newState;
-  //   });
-  // }
 
   const titleBlock: React.ReactNode = !editTitleVisible
     ? <div className="col-title">
@@ -127,19 +90,11 @@ const Column: React.FC<ColumnProps> = ({ id, title }) => {
     <div className="column">
       {titleBlock}
       <div className="column__cards">
-        {/* {cards.map((card) => (
-          <Card
-            setCardPopupData={setCardPopupData}
-            setShowCardPopup={setShowCardPopup}
-            onDelete={onDeleteCard}
-            data={card}
-            key={card.id}
-          />
-        ))} */}
+        {/* cards list */}
       </div>
       {addCardBlock}
     </div>
   );
 }
 
-export default Column;
+export default ColumnItem;

@@ -3,8 +3,8 @@ export interface IState {
 }
 
 export interface IColumn {
+  id: string;
   title: string;
-  cards: ICard[];
 }
 
 export interface ICard {

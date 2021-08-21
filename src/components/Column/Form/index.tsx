@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
-import './AddColumnBlock.css';
-import { isEmptyStr } from '../../utils';
-import { useAppDispatch } from '../../redux/store';
-import { columnsActions } from '../../redux/features/columns';
+import './Form.css';
+import { isEmptyStr } from '../../../utils';
+import { useAppDispatch } from '../../../redux/store';
+import { columnsActions } from '../../../redux/features/columns';
 
-interface IAddColumnFormProps {
-}
-
-const AddColumnForm: React.FunctionComponent<IAddColumnFormProps> = (props) => {
+const AddColumnForm: React.FunctionComponent = () => {
   const dispatch = useAppDispatch();
 
   const [value, setValue] = useState<string>('');
@@ -18,7 +15,6 @@ const AddColumnForm: React.FunctionComponent<IAddColumnFormProps> = (props) => {
   }
 
   function onKeyDown(event: React.KeyboardEvent) {
-    // event.preventDefault();
     switch (event.key) {
       case 'Enter':
         addColumn();
