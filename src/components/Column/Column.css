@@ -14,24 +14,41 @@
   margin-right: 0;
 }
 
-.column__title {
-  position: relative;
+.col-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.col-title:hover .col-title__btns {
+  opacity: 1;
+}
+
+.col-title__text {
+  flex-grow: 1;
   font-weight: 700;
   padding: 5px 10px 5px 10px;
-  cursor: pointer;
 }
 
-.column__title:hover > .column__edit-btn {
-  opacity: 0.4;
-}
-
-.column__edit-btn {
-  position: absolute;
-  top: 5px;
-  right: 10px;
+.col-title__btns {
+  display: flex;
+  flex-wrap: nowrap;
   opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.col-title__btn {
+  margin-right: 8px;
+  margin-left: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.4;
   cursor: pointer;
   transition: opacity 0.2s;
+}
+
+.col-title__btn:hover {
+  opacity: 1;
 }
 
 .edit-title {
@@ -76,6 +93,7 @@
 }
 
 .add-card-form__input {
+  display: block;
   width: 100%;
   height: 100px;
   padding: 8px 14px;
@@ -87,7 +105,7 @@
 }
 
 .add-card-form__btn {
-  margin-top: 10px;
+  margin-top: 14px;
   padding: 8px 25px;
   border-radius: 4px;
   font-weight: 500;
@@ -96,7 +114,7 @@
 }
 
 .add-card-form__btn_green {
-  margin-right: 10px;
+  margin-right: 14px;
   background-color: #4DD599;
   color: #FFFFFF;
 }

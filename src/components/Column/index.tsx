@@ -20,8 +20,6 @@ const Column: React.FC<ColumnProps> = ({ id, title }) => {
   const [editTitleVisible, setEditTitleVisible] = useState<boolean>(false);
   const addCardInputRef = useRef<HTMLTextAreaElement>(null);
 
-  // const isEmptyStr = (str: string): boolean => (str.trim() === '');
-
   function titleOnSubmit(value: string): void {
     const payload = {
       columnId: id,
@@ -33,6 +31,13 @@ const Column: React.FC<ColumnProps> = ({ id, title }) => {
 
   function titleOnCancle(): void {
     setEditTitleVisible(false);
+  }
+
+  function deleteColumn() {
+    const ask: string = 'Are you really want to delete this column?';
+    if (window.confirm(ask)) {
+      dispatch(columnsActions.deleteColumn(id));
+    }
   }
 
   // function onAddCard(event: React.MouseEvent): void {
@@ -69,9 +74,20 @@ const Column: React.FC<ColumnProps> = ({ id, title }) => {
   // }
 
   const titleBlock: React.ReactNode = !editTitleVisible
-    ? <div className="column__title" onClick={() => setEditTitleVisible(true)}>
-        {title}
-        <i className="bi bi-pencil-fill column__edit-btn"></i>
+    ? <div className="col-title">
+        <div className="col-title__text">{title}</div>
+        <div className="col-title__btns">
+          <i
+            title="Edit"
+            className="bi bi-pencil-fill col-title__btn"
+            onClick={() => setEditTitleVisible(true)}
+          ></i>
+          <i
+            title="Delete"
+            className="bi bi-x-lg col-title__btn"
+            onClick={deleteColumn}
+          ></i>
+        </div>
       </div>
     : <div className="edit-title">
         <QuickInput
