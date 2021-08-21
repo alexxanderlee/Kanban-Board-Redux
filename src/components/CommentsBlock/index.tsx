@@ -1,7 +1,24 @@
 import React from 'react';
 import './CommentsBlock.css';
-import { IComment, ICard } from '../../interfaces';
 import { CommentItem } from '../../components';
+
+interface ICard {
+  id: string;
+  columnId: string;
+  author: string;
+  title: string;
+  descr: string | null;
+  comments: IComment[];
+}
+
+interface IComment {
+  id: string;
+  cardId: string;
+  author: string;
+  text: string;
+  date: number;
+  isEdited: boolean;
+}
 
 interface ICommentsBlockProps {
   items: IComment[];

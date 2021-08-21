@@ -1,7 +1,3 @@
-export interface IState {
-  [id: string]: IColumn;
-}
-
 export interface IColumn {
   id: string;
   title: string;
@@ -13,7 +9,6 @@ export interface ICard {
   author: string;
   title: string;
   descr: string | null;
-  comments: IComment[];
 }
 
 export interface IComment {
