@@ -1,10 +1,36 @@
 import React, { useState } from 'react';
 import './CardPopup.css';
-import { IState, ICard } from '../../interfaces';
 import { QuickInput, CommentsBlock } from '../../components';
 import CardDescrBlock from './CardDescrBlock';
 import { useAppSelector } from '../../redux/store';
 import { userSelectors } from '../../redux/features/user';
+
+interface IState {
+  [id: string]: IColumn;
+}
+
+interface IColumn {
+  title: string;
+  cards: ICard[];
+}
+
+interface ICard {
+  id: string;
+  columnId: string;
+  author: string;
+  title: string;
+  descr: string | null;
+  comments: IComment[];
+}
+
+interface IComment {
+  id: string;
+  cardId: string;
+  author: string;
+  text: string;
+  date: number;
+  isEdited: boolean;
+}
 
 interface CardPopupProps {
   data: ICard | null;

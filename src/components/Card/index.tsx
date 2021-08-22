@@ -1,6 +1,23 @@
 import React from 'react';
 import './Card.css';
-import { ICard } from '../../interfaces';
+
+interface ICard {
+  id: string;
+  columnId: string;
+  author: string;
+  title: string;
+  descr: string | null;
+  comments: IComment[];
+}
+
+interface IComment {
+  id: string;
+  cardId: string;
+  author: string;
+  text: string;
+  date: number;
+  isEdited: boolean;
+}
 
 interface CardProps {
   data: ICard;

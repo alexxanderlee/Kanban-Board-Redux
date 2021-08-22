@@ -1,5 +1,5 @@
 export { default as Navbar } from './Navbar';
-export { default as Column} from './Column';
+export { default as ColumnsList } from './Column';
 export { default as Popup } from './Popup';
 export { default as Card } from './Card';
 export { default as CardPopup } from './CardPopup';
