@@ -3,16 +3,18 @@ import './CardPopup.css';
 import { IState, ICard } from '../../interfaces';
 import { QuickInput, CommentsBlock } from '../../components';
 import CardDescrBlock from './CardDescrBlock';
+import { useAppSelector } from '../../redux/store';
+import { userSelectors } from '../../redux/features/user';
 
 interface CardPopupProps {
   data: ICard | null;
   columnTitle: string;
-  username: string;
   setShowCardPopup(value: boolean): void;
   setState(state: IState | ((prevState: IState) => IState)): void;
 }
 
-const CardPopup: React.FC<CardPopupProps> = ({ data, columnTitle, username, setShowCardPopup, setState }) => {
+const CardPopup: React.FC<CardPopupProps> = ({ data, columnTitle, setShowCardPopup, setState }) => {
+  const username = useAppSelector(userSelectors.getUserName);
 
   const [showTitleEdit, setShowTitleEdit] = useState<boolean>(false);
 

@@ -2,12 +2,13 @@ import React, { useState, useRef } from 'react';
 import './Column.css';
 import { Card, QuickInput } from '../../components';
 import { IState, IColumn, ICard } from '../../interfaces';
+import { useAppSelector } from '../../redux/store';
+import { userSelectors } from '../../redux/features/user';
 
 interface ColumnProps {
   id: string;
   title: string;
   cards: ICard[];
-  username: string;
   setState(state: IState | ((prevState: IState) => IState)): void;
   setShowCardPopup(value: boolean): void;
   setCardPopupData(data: ICard): void;
@@ -17,11 +18,12 @@ const Column: React.FC<ColumnProps> = ({
   id,
   title,
   cards,
-  username,
   setState,
   setShowCardPopup,
   setCardPopupData
 }) => {
+  const username = useAppSelector(userSelectors.getUserName);
+
   const [addCardVisible, setAddCardVisible] = useState<boolean>(false);
   const [editTitleVisible, setEditTitleVisible] = useState<boolean>(false);
   const addCardInputRef = useRef<HTMLTextAreaElement>(null);

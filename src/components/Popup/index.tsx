@@ -1,11 +1,14 @@
 import React, { useState, useRef } from 'react';
 import './Popup.css';
+import { useAppDispatch } from '../../redux/store';
+import { userActions } from '../../redux/features/user';
+
 
 interface PopupProps {
-  setUsername(username: string): void;
 }
 
-const Popup: React.FC<PopupProps> = ({ setUsername }) => {
+const Popup: React.FC<PopupProps> = () => {
+  const dispatch = useAppDispatch();
   const [popupVisible, setPopupVisible] = useState<boolean>(true);
   const [errorInput, setErrorInput] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -17,7 +20,7 @@ const Popup: React.FC<PopupProps> = ({ setUsername }) => {
       return;
     }
     setErrorInput(false);
-    setUsername(value);
+    dispatch(userActions.setUser(value));
     setPopupVisible(false);
   }
 
