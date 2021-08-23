@@ -1,5 +1,7 @@
 import React from 'react';
 import './Item.css';
+import { useAppDispatch } from '../../../redux/store';
+import { cardsActions } from '../../../redux/features/cards';
 
 interface CardProps {
   id: string;
@@ -8,11 +10,12 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ id, title, descr }) => {
+  const dispatch = useAppDispatch();
 
   function handleDeleteCard(event: React.MouseEvent): void {
     event.stopPropagation();
     if (window.confirm('Are you sure you want to delete this card?')) {
-      // onDelete(id);
+      dispatch(cardsActions.deleteCard(id));
     }
   }
 
