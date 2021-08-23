@@ -5,7 +5,8 @@ import CardDescrBlock from './CardDescrBlock';
 import { useAppSelector, useAppDispatch } from '../../redux/store';
 import { cardsSelectors, cardsActions } from '../../redux/features/cards';
 import { cardPopupActions } from '../../redux/features/cardPopup';
-import { ICard } from '../../interfaces';
+import { columnsSelectors } from '../../redux/features/columns';
+import { ICard, IColumn } from '../../interfaces';
 
 interface CardPopupProps {
   cardId: string;
@@ -14,6 +15,7 @@ interface CardPopupProps {
 const CardPopup: React.FC<CardPopupProps> = ({ cardId }) => {
   const dispatch = useAppDispatch();
   const data: ICard = useAppSelector(state => cardsSelectors.getCardById(state, cardId));
+  const column: IColumn = useAppSelector(state => columnsSelectors.getColumnById(state, data.columnId));
 
   const [showTitleEdit, setShowTitleEdit] = useState<boolean>(false);
 
@@ -52,7 +54,7 @@ const CardPopup: React.FC<CardPopupProps> = ({ cardId }) => {
               }
               <div className="bi bi-x-lg card-popup__close-btn" onClick={hidePopup}></div>
             </div>
-            <div className="card-popup__column-name">in column ""</div>
+            <div className="card-popup__column-name">in column "{column.title}"</div>
             <div className="card-popup__author-name">{data.author}</div>
             <div className="card-popup__content">
               <CardDescrBlock cardId={data.id} description={data.descr} />
