@@ -2,45 +2,18 @@ import React, { useState } from 'react';
 import './CardPopup.css';
 import { QuickInput, CommentsBlock } from '../../components';
 import CardDescrBlock from './CardDescrBlock';
-import { useAppSelector } from '../../redux/store';
-import { userSelectors } from '../../redux/features/user';
-
-interface IState {
-  [id: string]: IColumn;
-}
-
-interface IColumn {
-  title: string;
-  cards: ICard[];
-}
-
-interface ICard {
-  id: string;
-  columnId: string;
-  author: string;
-  title: string;
-  descr: string | null;
-  comments: IComment[];
-}
-
-interface IComment {
-  id: string;
-  cardId: string;
-  author: string;
-  text: string;
-  date: number;
-  isEdited: boolean;
-}
+import { useAppSelector, useAppDispatch } from '../../redux/store';
+import { cardsSelectors, cardsActions } from '../../redux/features/cards';
+import { cardPopupActions } from '../../redux/features/cardPopup';
+import { ICard } from '../../interfaces';
 
 interface CardPopupProps {
-  data: ICard | null;
-  columnTitle: string;
-  setShowCardPopup(value: boolean): void;
-  setState(state: IState | ((prevState: IState) => IState)): void;
+  cardId: string;
 }
 
-const CardPopup: React.FC<CardPopupProps> = ({ data, columnTitle, setShowCardPopup, setState }) => {
-  const username = useAppSelector(userSelectors.getUserName);
+const CardPopup: React.FC<CardPopupProps> = ({ cardId }) => {
+  const dispatch = useAppDispatch();
+  const data: ICard = useAppSelector(state => cardsSelectors.getCardById(state, cardId));
 
   const [showTitleEdit, setShowTitleEdit] = useState<boolean>(false);
 
@@ -49,27 +22,17 @@ const CardPopup: React.FC<CardPopupProps> = ({ data, columnTitle, setShowCardPop
   }
 
   function titleOnSubmit(value: string): void {
-    updateCard('title', value);
+    dispatch(cardsActions.editCardTitle(cardId, value));
     setShowTitleEdit(false);
   }
-  
-  function updateCard<T extends keyof ICard>(key: T, value: ICard[T]): void {
-    data && setState(prevState => {
-      const newState: IState = { ...prevState };
-      const columnId: string = data.columnId;
-      newState[columnId].cards = newState[columnId].cards.map(card => {
-        if (card.id === data.id) {
-          card[key] = value;
-        }
-        return card;
-      });
-      localStorage.setItem('state', JSON.stringify(newState));
-      return newState;
-    });
+
+  function hidePopup() {
+    dispatch(cardPopupActions.hidePopup());
+    dispatch(cardPopupActions.resetCardId());
   }
 
   return (
-    <div className="card-popup" onClick={() => setShowCardPopup(false)}>
+    <div className="card-popup" onClick={hidePopup}>
       <div className="card-popup__window" onClick={e => e.stopPropagation()}>
         {data && (
           <div className="card-popup__wrapper">
@@ -87,18 +50,17 @@ const CardPopup: React.FC<CardPopupProps> = ({ data, columnTitle, setShowCardPop
                       <i className="bi bi-pencil-fill card-popup__title-edit"></i>
                     </h2>
               }
-              <div className="bi bi-x-lg card-popup__close-btn" onClick={() => setShowCardPopup(false)}></div>
+              <div className="bi bi-x-lg card-popup__close-btn" onClick={hidePopup}></div>
             </div>
-            <div className="card-popup__column-name">in column "{columnTitle}"</div>
+            <div className="card-popup__column-name">in column ""</div>
             <div className="card-popup__author-name">{data.author}</div>
             <div className="card-popup__content">
-              <CardDescrBlock description={data.descr} updateCard={updateCard} />
-              <CommentsBlock
+              <CardDescrBlock cardId={data.id} description={data.descr} />
+              {/* <CommentsBlock
                 cardId={data.id}
                 items={data.comments}
                 username={username}
-                updateCard={updateCard}
-              />
+              /> */}
             </div>
           </div>
         )}

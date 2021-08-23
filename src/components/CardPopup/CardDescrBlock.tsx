@@ -1,32 +1,33 @@
 import React, { useState } from 'react';
-import { ICard } from '../../interfaces';
+import { useAppDispatch } from '../../redux/store';
+import { cardsActions } from '../../redux/features/cards';
+import { isEmptyStr } from '../../utils';
 
 interface CardDescrBlockProps {
+  cardId: string;
   description: string | null;
-  updateCard<CardKey extends keyof ICard>(key: CardKey, value: ICard[CardKey]) : void;
 }
 
-const CardDescrBlock: React.FC<CardDescrBlockProps> = ({ description, updateCard }) => {
+const CardDescrBlock: React.FC<CardDescrBlockProps> = ({ cardId, description }) => {
+  const dispatch = useAppDispatch();
   const [showEditForm, setShowEditForm] = useState<boolean>(false);
-  const [inputValue, setInputValue] = useState<string| null>(description);
-
-  const isEmpty = (str: string | null): boolean => ((str === null) ? (true) : (str.trim() === ''));
+  const [inputValue, setInputValue] = useState<string | null>(description);
 
   function onChangeInputValue(event: React.ChangeEvent<HTMLTextAreaElement>): void {
     setInputValue(event.target.value);
   }
 
   function clearDescr(): void {
-    updateCard('descr', null);
+    dispatch(cardsActions.editCardDescr(cardId, null));
     setInputValue('');
   }
 
   function submitDescrForm(): void {
-    if (isEmpty(inputValue)) {
+    if (inputValue && isEmptyStr(inputValue)) {
       closeDescrForm();
       return;
     }
-    updateCard('descr', inputValue);
+    dispatch(cardsActions.editCardDescr(cardId, inputValue));
     setShowEditForm(false);
   }
 

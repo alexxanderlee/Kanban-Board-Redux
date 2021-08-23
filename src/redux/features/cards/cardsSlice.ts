@@ -63,7 +63,7 @@ const cardsSlice = createSlice({
         const { cardId, value } = action.payload;
         state.items = editCard<'descr'>(state.items, cardId, 'descr', value);
       },
-      prepare: (cardId: string, value: string) => ({ payload: { cardId, value } }),
+      prepare: (cardId: string, value: string | null) => ({ payload: { cardId, value } }),
     },
   },
 });

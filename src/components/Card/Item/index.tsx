@@ -2,6 +2,7 @@ import React from 'react';
 import './Item.css';
 import { useAppDispatch } from '../../../redux/store';
 import { cardsActions } from '../../../redux/features/cards';
+import { cardPopupActions } from '../../../redux/features/cardPopup';
 
 interface CardProps {
   id: string;
@@ -20,11 +21,9 @@ const Card: React.FC<CardProps> = ({ id, title, descr }) => {
   }
 
   function handleClickCard(): void {
-    // setCardPopupData(data);
-    // setShowCardPopup(true);
+    dispatch(cardPopupActions.setCardId(id));
+    dispatch(cardPopupActions.showPopup());
   }
-
-  // const indicatorsExist = (descr || data.comments.length > 0);
 
   return (
     <div className="card" onClick={handleClickCard}>
@@ -32,12 +31,10 @@ const Card: React.FC<CardProps> = ({ id, title, descr }) => {
         {title}
         <i className="bi bi-x-lg card__delete-btn" onClick={handleDeleteCard}></i>
       </div>
-      {/* {indicatorsExist && (
-        <div className="card__indicators">
-            {descr && <i className="bi bi-text-left card__indicator"></i>}
-            {data.comments.length > 0 && <i className="bi bi-chat-dots card__indicator"><span>{data.comments.length}</span></i>}
-        </div>
-      )} */}
+      <div className="card__indicators">
+        {descr && <i className="bi bi-text-left card__indicator"></i>}
+        {/* {data.comments.length > 0 && <i className="bi bi-chat-dots card__indicator"><span>{data.comments.length}</span></i>} */}
+      </div>
     </div>
   );
 };

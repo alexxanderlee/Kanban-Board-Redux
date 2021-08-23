@@ -24,10 +24,9 @@ interface ICommentsBlockProps {
   items: IComment[];
   username: string;
   cardId: string;
-  updateCard<T extends keyof ICard>(key: T, value: ICard[T]): void
 }
 
-const CommentsBlock: React.FC<ICommentsBlockProps> = ({ items, username, cardId, updateCard }) => {
+const CommentsBlock: React.FC<ICommentsBlockProps> = ({ items, username, cardId }) => {
 
   const [inputValue, setInputValue] = React.useState<string>('');
 
@@ -46,13 +45,13 @@ const CommentsBlock: React.FC<ICommentsBlockProps> = ({ items, username, cardId,
       isEdited: false,
     }
     const newComments: IComment[] = [...items, comment];
-    updateCard('comments', newComments);
+    // updateCard('comments', newComments);
     setInputValue('');
   }
 
   function deleteComment(id: string): void {
     const newComments: IComment[] = items.filter(item => item.id !== id);
-    updateCard('comments', newComments);
+    // updateCard('comments', newComments);
   }
 
   function editComment(id: string, newText: string): void {
@@ -63,7 +62,7 @@ const CommentsBlock: React.FC<ICommentsBlockProps> = ({ items, username, cardId,
       }
       return item;
     });
-    updateCard('comments', newComments);
+    // updateCard('comments', newComments);
   }
 
   function onChangeInput(event: React.ChangeEvent<HTMLTextAreaElement>): void {

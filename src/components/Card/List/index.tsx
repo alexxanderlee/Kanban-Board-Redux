@@ -39,7 +39,7 @@ const CardsList: React.FunctionComponent<ICardsListProps> = ({ columnId }) => {
   return (
     <div className="cards-list">
       {cards && cards.map(card => (
-        <CardItem id={card.id} title={card.title} descr={card.descr} />
+        <CardItem key={card.id} id={card.id} title={card.title} descr={card.descr} />
       ))}
       {
         showForm
