@@ -3,6 +3,7 @@ import './Item.css';
 import { QuickInput, CardsList } from '../../../components';
 import { useAppDispatch } from '../../../redux/store';
 import { columnsActions } from '../../../redux/features/columns';
+import { cardsActions } from '../../../redux/features/cards';
 
 interface ColumnItemProps {
   id: string;
@@ -31,6 +32,7 @@ const ColumnItem: React.FC<ColumnItemProps> = ({ id, title }) => {
     const ask: string = 'Are you really want to delete this column?';
     if (window.confirm(ask)) {
       dispatch(columnsActions.deleteColumn(id));
+      dispatch(cardsActions.deleteCardsByColumnId(id));
     }
   }
 
