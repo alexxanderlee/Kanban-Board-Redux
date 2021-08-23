@@ -1,4 +1,4 @@
-import { configureStore, combineReducers} from '@reduxjs/toolkit';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import {
   persistStore,
   persistReducer,
@@ -11,12 +11,11 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { userReducer, columnsReducer, cardsReducer } from './features';
+import { userReducer, columnsReducer } from './features';
 
 const rootReducer = combineReducers({
   user: userReducer,
   columns: columnsReducer,
-  cards: cardsReducer,
 });
 
 const persistConfig = {
