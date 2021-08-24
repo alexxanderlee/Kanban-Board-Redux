@@ -12,7 +12,6 @@ const Navbar: React.FC<NavbarProps> = ({ username }) => {
 
   function logOut() {
     dispatch(userActions.logOut());
-    console.log('logout')
   }
 
   return (
