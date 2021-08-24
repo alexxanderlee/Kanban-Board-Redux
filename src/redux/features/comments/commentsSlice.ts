@@ -46,6 +46,7 @@ const commentsSlice = createSlice({
         state.items = state.items.map(comment => {
           if (comment.id === commentId) {
             comment.text = newText;
+            comment.isEdited = true;
           }
           return comment;
         });
