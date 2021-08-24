@@ -2,15 +2,6 @@ import React from 'react';
 import './CommentsBlock.css';
 import { CommentItem } from '../../components';
 
-interface ICard {
-  id: string;
-  columnId: string;
-  author: string;
-  title: string;
-  descr: string | null;
-  comments: IComment[];
-}
-
 interface IComment {
   id: string;
   cardId: string;
@@ -45,13 +36,11 @@ const CommentsBlock: React.FC<ICommentsBlockProps> = ({ items, username, cardId 
       isEdited: false,
     }
     const newComments: IComment[] = [...items, comment];
-    // updateCard('comments', newComments);
     setInputValue('');
   }
 
   function deleteComment(id: string): void {
     const newComments: IComment[] = items.filter(item => item.id !== id);
-    // updateCard('comments', newComments);
   }
 
   function editComment(id: string, newText: string): void {
@@ -62,7 +51,6 @@ const CommentsBlock: React.FC<ICommentsBlockProps> = ({ items, username, cardId 
       }
       return item;
     });
-    // updateCard('comments', newComments);
   }
 
   function onChangeInput(event: React.ChangeEvent<HTMLTextAreaElement>): void {

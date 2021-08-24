@@ -33,7 +33,7 @@ const Card: React.FC<CardProps> = ({ id, title, descr }) => {
       </div>
       <div className="card__indicators">
         {descr && <i className="bi bi-text-left card__indicator"></i>}
-        {/* {data.comments.length > 0 && <i className="bi bi-chat-dots card__indicator"><span>{data.comments.length}</span></i>} */}
+        
       </div>
     </div>
   );

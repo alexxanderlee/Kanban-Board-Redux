@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './CardPopup.css';
-import { QuickInput, CommentsBlock } from '../../components';
+import { QuickInput } from '../../components';
 import CardDescrBlock from './CardDescrBlock';
 import { useAppSelector, useAppDispatch } from '../../redux/store';
 import { cardsSelectors, cardsActions } from '../../redux/features/cards';
@@ -58,11 +58,7 @@ const CardPopup: React.FC<CardPopupProps> = ({ cardId }) => {
             <div className="card-popup__author-name">{data.author}</div>
             <div className="card-popup__content">
               <CardDescrBlock cardId={data.id} description={data.descr} />
-              {/* <CommentsBlock
-                cardId={data.id}
-                items={data.comments}
-                username={username}
-              /> */}
+              
             </div>
           </div>
         )}
