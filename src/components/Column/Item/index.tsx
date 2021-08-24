@@ -15,7 +15,7 @@ const ColumnItem: React.FC<ColumnItemProps> = ({ id, title }) => {
 
   const [editTitleVisible, setEditTitleVisible] = useState<boolean>(false);
 
-  function titleOnSubmit(value: string): void {
+  function updateTitle(value: string): void {
     const payload = {
       columnId: id,
       newTitle: value
@@ -40,7 +40,7 @@ const ColumnItem: React.FC<ColumnItemProps> = ({ id, title }) => {
               <QuickInput
                 className={'edit-title__input'}
                 initialValue={title}
-                onSubmit={titleOnSubmit}
+                onSubmit={updateTitle}
                 onCancel={() => setEditTitleVisible(false)}
               />
             </div>
