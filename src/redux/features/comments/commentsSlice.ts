@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IComment } from '../../../interfaces';
+import { cardsActions } from '../cards';
 
 interface CommentsState {
   items: IComment[],
@@ -39,10 +40,6 @@ const commentsSlice = createSlice({
       const commentId: string = action.payload;
       state.items = state.items.filter(comment => (comment.id !== commentId));
     },
-    deleteCommentsByCardId: (state, action: PayloadAction<string>) => {
-      const cardId: string = action.payload;
-      state.items = state.items.filter(comment => (comment.cardId !== cardId));
-    },
     editCommentText: {
       reducer: (state, action: PayloadAction<EditCommentTextPayload>) => {
         const { commentId, newText } = action.payload;
@@ -55,6 +52,12 @@ const commentsSlice = createSlice({
       },
       prepare: (commentId, newText) => ({ payload: { commentId, newText } })
     }
+  },
+  extraReducers: (builder) =>{
+    builder.addCase(cardsActions.deleteCard, (state, action) => {
+      const cardId: string = action.payload;
+      state.items = state.items.filter(comment => (comment.cardId !== cardId));
+    })
   },
 });
 

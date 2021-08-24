@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ICard } from '../../../interfaces';
+import { columnsActions } from '../columns';
 
 interface CardsState {
   items: ICard[],
@@ -47,10 +48,6 @@ const cardsSlice = createSlice({
       const cardId: string = action.payload;
       state.items = state.items.filter(card => (card.id !== cardId));
     },
-    deleteCardsByColumnId: (state, action: PayloadAction<string>) => {
-      const columnId: string = action.payload;
-      state.items = state.items.filter(card => (card.columnId !== columnId));
-    },
     editCardTitle: {
       reducer: (state, action: PayloadAction<EditCardPayload<'title'>>) => {
         const { cardId, value } = action.payload;
@@ -65,6 +62,12 @@ const cardsSlice = createSlice({
       },
       prepare: (cardId: string, value: string | null) => ({ payload: { cardId, value } }),
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(columnsActions.deleteColumn, (state, action) => {
+      const columnId: string = action.payload;
+      state.items = state.items.filter(card => (card.columnId !== columnId));
+    })
   },
 });
 

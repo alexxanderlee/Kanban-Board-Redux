@@ -3,7 +3,6 @@ import './Item.css';
 import { useAppDispatch } from '../../../redux/store';
 import { cardsActions } from '../../../redux/features/cards';
 import { cardPopupActions } from '../../../redux/features/cardPopup';
-import { commentsActions } from '../../../redux/features/comments';
 
 interface CardProps {
   id: string;
@@ -18,7 +17,6 @@ const Card: React.FC<CardProps> = ({ id, title, descr }) => {
     event.stopPropagation();
     if (window.confirm('Are you sure you want to delete this card?')) {
       dispatch(cardsActions.deleteCard(id));
-      dispatch(commentsActions.deleteCommentsByCardId(id));
     }
   }
 
