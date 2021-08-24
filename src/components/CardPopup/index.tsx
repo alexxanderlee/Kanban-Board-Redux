@@ -19,10 +19,6 @@ const CardPopup: React.FC<CardPopupProps> = ({ cardId }) => {
 
   const [showTitleEdit, setShowTitleEdit] = useState<boolean>(false);
 
-  function titleOnCancel(): void {
-    setShowTitleEdit(false);
-  }
-
   function titleOnSubmit(value: string): void {
     dispatch(cardsActions.editCardTitle(cardId, value));
     setShowTitleEdit(false);
@@ -45,7 +41,7 @@ const CardPopup: React.FC<CardPopupProps> = ({ cardId }) => {
                       className={'card-popup__title-input'}
                       initialValue={data.title}
                       onSubmit={titleOnSubmit}
-                      onCancel={titleOnCancel}
+                      onCancel={() => setShowTitleEdit(false)}
                     />
                   : <h2 className="card-popup__title" onClick={() => setShowTitleEdit(true)}>
                       {data.title}

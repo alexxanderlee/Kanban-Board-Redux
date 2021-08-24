@@ -24,10 +24,6 @@ const ColumnItem: React.FC<ColumnItemProps> = ({ id, title }) => {
     setEditTitleVisible(false);
   }
 
-  function titleOnCancle(): void {
-    setEditTitleVisible(false);
-  }
-
   function deleteColumn() {
     const ask: string = 'Are you really want to delete this column?';
     if (window.confirm(ask)) {
@@ -45,7 +41,7 @@ const ColumnItem: React.FC<ColumnItemProps> = ({ id, title }) => {
                 className={'edit-title__input'}
                 initialValue={title}
                 onSubmit={titleOnSubmit}
-                onCancel={titleOnCancle}
+                onCancel={() => setEditTitleVisible(false)}
               />
             </div>
           : <div className="col-title">
