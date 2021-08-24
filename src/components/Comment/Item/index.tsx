@@ -2,6 +2,8 @@ import React from 'react';
 import { formatRelative } from 'date-fns';
 import './Item.css';
 import { isEmptyStr } from '../../../utils';
+import { useAppDispatch } from '../../../redux/store';
+import { commentsActions } from '../../../redux/features/comments';
 import { IComment } from '../../../interfaces';
 
 interface ICommentItemProps {
@@ -9,6 +11,7 @@ interface ICommentItemProps {
 }
 
 const CommentItem: React.FC<ICommentItemProps> = ({ data }) => {
+  const dispatch = useAppDispatch();
   const [showEditForm, setShowEditForm] = React.useState<boolean>(false);
   const [editFormValue, setEditFormValue] = React.useState<string>(data.text);
   const date = formatRelative(new Date(data.date), new Date());
@@ -18,14 +21,14 @@ const CommentItem: React.FC<ICommentItemProps> = ({ data }) => {
   }
 
   function deleteComment() {
-    
+    dispatch(commentsActions.deleteComment(data.id));
   }
 
   function updateCommentText(): void {
     if (isEmptyStr(editFormValue)) {
       return;
     }
-    
+    dispatch(commentsActions.editCommentText(data.id, editFormValue));
     setShowEditForm(false);
   }
 
