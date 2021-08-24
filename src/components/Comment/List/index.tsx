@@ -1,56 +1,28 @@
 import React from 'react';
 import './List.css';
 import { CommentItem } from '../../Comment';
-
-interface IComment {
-  id: string;
-  cardId: string;
-  author: string;
-  text: string;
-  date: number;
-  isEdited: boolean;
-}
+import { isEmptyStr } from '../../../utils';
+import { useAppSelector, useAppDispatch } from '../../../redux/store';
+import { commentsSelectors, commentsActions } from '../../../redux/features/comments';
+import { userSelectors } from '../../../redux/features/user';
 
 interface ICommentsListProps {
-  items: IComment[];
-  username: string;
   cardId: string;
 }
 
-const CommentsList: React.FC<ICommentsListProps> = ({ items, username, cardId }) => {
+const CommentsList: React.FC<ICommentsListProps> = ({ cardId }) => {
+  const dispatch = useAppDispatch();
+  const comments = useAppSelector((state) => commentsSelectors.getCommentsByCardId(state, cardId));
+  const username = useAppSelector(userSelectors.getUserName);
 
   const [inputValue, setInputValue] = React.useState<string>('');
-
-  const isEmptyStr = (str: string): boolean => (str.trim() === '');
 
   function addComment(): void {
     if (isEmptyStr(inputValue)) {
       return;
     }
-    const comment: IComment = {
-      id: Date.now().toString(16),
-      cardId: cardId,
-      author: username,
-      text: inputValue,
-      date: Date.now(),
-      isEdited: false,
-    }
-    const newComments: IComment[] = [...items, comment];
+    dispatch(commentsActions.addComment(cardId, username, inputValue,));
     setInputValue('');
-  }
-
-  function deleteComment(id: string): void {
-    const newComments: IComment[] = items.filter(item => item.id !== id);
-  }
-
-  function editComment(id: string, newText: string): void {
-    const newComments: IComment[] = items.map(item => {
-      if (item.id === id) {
-        item.text = newText;
-        item.isEdited = true;
-      }
-      return item;
-    });
   }
 
   function onChangeInput(event: React.ChangeEvent<HTMLTextAreaElement>): void {
@@ -75,8 +47,8 @@ const CommentsList: React.FC<ICommentsListProps> = ({ items, username, cardId })
         >Add</button>
       </div>
       <div className="card-comments__list">
-        {items.map(item => (
-          <CommentItem key={item.id} data={item} deleteComment={deleteComment} editComment={editComment} />
+        {comments.map(comment => (
+          <CommentItem key={comment.id} data={comment} />
         ))}
       </div>
     </div>

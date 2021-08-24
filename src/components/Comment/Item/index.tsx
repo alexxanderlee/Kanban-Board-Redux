@@ -1,31 +1,31 @@
 import React from 'react';
 import { formatRelative } from 'date-fns';
 import './Item.css';
+import { isEmptyStr } from '../../../utils';
 import { IComment } from '../../../interfaces';
 
 interface ICommentItemProps {
   data: IComment;
-  deleteComment(id: string): void;
-  editComment(id: string, newText: string): void;
 }
 
-const CommentItem: React.FC<ICommentItemProps> = ({ data, deleteComment, editComment }) => {
+const CommentItem: React.FC<ICommentItemProps> = ({ data }) => {
   const [showEditForm, setShowEditForm] = React.useState<boolean>(false);
   const [editFormValue, setEditFormValue] = React.useState<string>(data.text);
   const date = formatRelative(new Date(data.date), new Date());
-
-  const isEmptyStr = (str: string): boolean => (str.trim() === '');
 
   function onChange(event: React.ChangeEvent<HTMLTextAreaElement>): void {
     setEditFormValue(event.target.value);
   }
 
-  function submitEditForm(): void {
+  function deleteComment() {
+    
+  }
+
+  function updateCommentText(): void {
     if (isEmptyStr(editFormValue)) {
-      closeEditForm();
       return;
     }
-    editComment(data.id, editFormValue);
+    
     setShowEditForm(false);
   }
 
@@ -43,7 +43,7 @@ const CommentItem: React.FC<ICommentItemProps> = ({ data, deleteComment, editCom
       ></textarea>
       <button
         className="edit-comment__btn edit-comment__btn_ok"
-        onClick={submitEditForm}
+        onClick={updateCommentText}
       >Save</button>
       <button
         className="edit-comment__btn edit-comment__btn_cancel"
@@ -63,7 +63,7 @@ const CommentItem: React.FC<ICommentItemProps> = ({ data, deleteComment, editCom
         {!showEditForm && (
           <div className="comment__btns">
             <div className="comment__btn" onClick={() => setShowEditForm(true)}>Edit</div>
-            <div className="comment__btn" onClick={() => deleteComment(data.id)}>Delete</div>
+            <div className="comment__btn" onClick={deleteComment}>Delete</div>
           </div>
         )}
       </div>
