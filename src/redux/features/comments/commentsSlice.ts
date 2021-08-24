@@ -24,10 +24,11 @@ const commentsSlice = createSlice({
         const comment: IComment = action.payload;
         state.items.push(comment);
       },
-      prepare: (cardId, author, text) => {
+      prepare: (cardId, columnId, author, text) => {
         const comment: IComment = {
           id: Date.now().toString(16),
           cardId,
+          columnId,
           author,
           text,
           date: Date.now(),

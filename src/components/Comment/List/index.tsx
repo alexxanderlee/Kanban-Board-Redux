@@ -8,9 +8,10 @@ import { userSelectors } from '../../../redux/features/user';
 
 interface ICommentsListProps {
   cardId: string;
+  columnId: string;
 }
 
-const CommentsList: React.FC<ICommentsListProps> = ({ cardId }) => {
+const CommentsList: React.FC<ICommentsListProps> = ({ cardId, columnId }) => {
   const dispatch = useAppDispatch();
   const comments = useAppSelector((state) => commentsSelectors.getCommentsByCardId(state, cardId));
   const username = useAppSelector(userSelectors.getUserName);
@@ -21,7 +22,7 @@ const CommentsList: React.FC<ICommentsListProps> = ({ cardId }) => {
     if (isEmptyStr(inputValue)) {
       return;
     }
-    dispatch(commentsActions.addComment(cardId, username, inputValue,));
+    dispatch(commentsActions.addComment(cardId, columnId, username, inputValue,));
     setInputValue('');
   }
 

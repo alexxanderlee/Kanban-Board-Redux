@@ -54,7 +54,7 @@ const CardPopup: React.FC<CardPopupProps> = ({ cardId }) => {
             <div className="card-popup__author-name">{data.author}</div>
             <div className="card-popup__content">
               <CardDescrBlock cardId={data.id} description={data.descr} />
-              <CommentsList cardId={data.id} />
+              <CommentsList cardId={data.id} columnId={data.columnId} />
             </div>
           </div>
         )}
