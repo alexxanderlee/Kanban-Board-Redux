@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IComment } from '../../../interfaces';
 import { cardsActions } from '../cards';
+import { columnsActions } from '../columns';
 
 interface CommentsState {
   items: IComment[],
@@ -59,6 +60,10 @@ const commentsSlice = createSlice({
     builder.addCase(cardsActions.deleteCard, (state, action) => {
       const cardId: string = action.payload;
       state.items = state.items.filter(comment => (comment.cardId !== cardId));
+    })
+    builder.addCase(columnsActions.deleteColumn, (state, action) => {
+      const columnId: string = action.payload;
+      state.items = state.items.filter(comment => (comment.columnId !== columnId));
     })
   },
 });
