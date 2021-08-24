@@ -1,8 +1,9 @@
 import React from 'react';
 import './Item.css';
-import { useAppDispatch } from '../../../redux/store';
+import { useAppDispatch, useAppSelector } from '../../../redux/store';
 import { cardsActions } from '../../../redux/features/cards';
 import { cardPopupActions } from '../../../redux/features/cardPopup';
+import { commentsSelectors } from '../../../redux/features/comments';
 
 interface CardProps {
   id: string;
@@ -12,6 +13,7 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ id, title, descr }) => {
   const dispatch = useAppDispatch();
+  const commentsCount = useAppSelector((state) => commentsSelectors.getCommentsByCardId(state, id)).length;
 
   function handleDeleteCard(event: React.MouseEvent): void {
     event.stopPropagation();
@@ -33,7 +35,7 @@ const Card: React.FC<CardProps> = ({ id, title, descr }) => {
       </div>
       <div className="card__indicators">
         {descr && <i className="bi bi-text-left card__indicator"></i>}
-        
+        {commentsCount > 0 && <i className="bi bi-chat-dots card__indicator"><span>{commentsCount}</span></i>}
       </div>
     </div>
   );
