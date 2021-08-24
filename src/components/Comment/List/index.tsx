@@ -1,6 +1,6 @@
 import React from 'react';
-import './CommentsBlock.css';
-import { CommentItem } from '../../components';
+import './List.css';
+import { CommentItem } from '../../Comment';
 
 interface IComment {
   id: string;
@@ -11,13 +11,13 @@ interface IComment {
   isEdited: boolean;
 }
 
-interface ICommentsBlockProps {
+interface ICommentsListProps {
   items: IComment[];
   username: string;
   cardId: string;
 }
 
-const CommentsBlock: React.FC<ICommentsBlockProps> = ({ items, username, cardId }) => {
+const CommentsList: React.FC<ICommentsListProps> = ({ items, username, cardId }) => {
 
   const [inputValue, setInputValue] = React.useState<string>('');
 
@@ -83,4 +83,4 @@ const CommentsBlock: React.FC<ICommentsBlockProps> = ({ items, username, cardId 
   );
 };
 
-export default CommentsBlock;
+export default CommentsList;

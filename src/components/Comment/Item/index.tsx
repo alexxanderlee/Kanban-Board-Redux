@@ -1,7 +1,7 @@
 import React from 'react';
 import { formatRelative } from 'date-fns';
-import './CommentItem.css';
-import { IComment } from '../../interfaces';
+import './Item.css';
+import { IComment } from '../../../interfaces';
 
 interface ICommentItemProps {
   data: IComment;
