@@ -4,5 +4,4 @@ export { default as Popup } from './Popup';
 export { default as CardsList } from './Card';
 export { default as CardPopup } from './CardPopup';
 export { default as QuickInput } from './QuickInput';
-export { default as CommentsBlock } from './CommentsBlock';
-export { default as CommentItem } from './CommentItem';
+export { default as CommentsList } from './Comment';

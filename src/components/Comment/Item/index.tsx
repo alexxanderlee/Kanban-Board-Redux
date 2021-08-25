@@ -1,31 +1,37 @@
 import React from 'react';
-import { formatRelative } from 'date-fns';
-import './CommentItem.css';
-import { IComment } from '../../interfaces';
+import dayjs from 'dayjs';
+import calendar from 'dayjs/plugin/calendar';
+import './Item.css';
+import { isEmptyStr } from '../../../utils';
+import { useAppDispatch } from '../../../redux/store';
+import { commentsActions } from '../../../redux/features/comments';
+import { IComment } from '../../../interfaces';
+
+dayjs.extend(calendar);
 
 interface ICommentItemProps {
   data: IComment;
-  deleteComment(id: string): void;
-  editComment(id: string, newText: string): void;
 }
 
-const CommentItem: React.FC<ICommentItemProps> = ({ data, deleteComment, editComment }) => {
+const CommentItem: React.FC<ICommentItemProps> = ({ data }) => {
+  const dispatch = useAppDispatch();
   const [showEditForm, setShowEditForm] = React.useState<boolean>(false);
   const [editFormValue, setEditFormValue] = React.useState<string>(data.text);
-  const date = formatRelative(new Date(data.date), new Date());
-
-  const isEmptyStr = (str: string): boolean => (str.trim() === '');
+  const date = dayjs(data.date).calendar(dayjs());
 
   function onChange(event: React.ChangeEvent<HTMLTextAreaElement>): void {
     setEditFormValue(event.target.value);
   }
 
-  function submitEditForm(): void {
+  function deleteComment() {
+    dispatch(commentsActions.deleteComment(data.id));
+  }
+
+  function updateCommentText(): void {
     if (isEmptyStr(editFormValue)) {
-      closeEditForm();
       return;
     }
-    editComment(data.id, editFormValue);
+    dispatch(commentsActions.editCommentText(data.id, editFormValue));
     setShowEditForm(false);
   }
 
@@ -43,7 +49,7 @@ const CommentItem: React.FC<ICommentItemProps> = ({ data, deleteComment, editCom
       ></textarea>
       <button
         className="edit-comment__btn edit-comment__btn_ok"
-        onClick={submitEditForm}
+        onClick={updateCommentText}
       >Save</button>
       <button
         className="edit-comment__btn edit-comment__btn_cancel"
@@ -63,7 +69,7 @@ const CommentItem: React.FC<ICommentItemProps> = ({ data, deleteComment, editCom
         {!showEditForm && (
           <div className="comment__btns">
             <div className="comment__btn" onClick={() => setShowEditForm(true)}>Edit</div>
-            <div className="comment__btn" onClick={() => deleteComment(data.id)}>Delete</div>
+            <div className="comment__btn" onClick={deleteComment}>Delete</div>
           </div>
         )}
       </div>

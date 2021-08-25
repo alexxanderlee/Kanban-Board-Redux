@@ -14,6 +14,7 @@ export interface ICard {
 export interface IComment {
   id: string;
   cardId: string;
+  columnId: string;
   author: string;
   text: string;
   date: number;
