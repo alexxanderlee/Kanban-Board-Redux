@@ -1,10 +1,13 @@
 import React from 'react';
-import { formatRelative } from 'date-fns';
+import dayjs from 'dayjs';
+import calendar from 'dayjs/plugin/calendar';
 import './Item.css';
 import { isEmptyStr } from '../../../utils';
 import { useAppDispatch } from '../../../redux/store';
 import { commentsActions } from '../../../redux/features/comments';
 import { IComment } from '../../../interfaces';
+
+dayjs.extend(calendar);
 
 interface ICommentItemProps {
   data: IComment;
@@ -14,7 +17,7 @@ const CommentItem: React.FC<ICommentItemProps> = ({ data }) => {
   const dispatch = useAppDispatch();
   const [showEditForm, setShowEditForm] = React.useState<boolean>(false);
   const [editFormValue, setEditFormValue] = React.useState<string>(data.text);
-  const date = formatRelative(new Date(data.date), new Date());
+  const date = dayjs(data.date).calendar(dayjs());
 
   function onChange(event: React.ChangeEvent<HTMLTextAreaElement>): void {
     setEditFormValue(event.target.value);
