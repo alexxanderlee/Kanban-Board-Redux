@@ -25,16 +25,16 @@
   color: #212529;
 }
 
-.popup__title {
+.auth-form__title {
+  margin-bottom: 15px;
   font-weight: 700;
   font-size: 20px;
   line-height: 22px;
 }
 
-.popup__input {
+.auth-form__input {
   display: block;
   width: 100%;
-  margin-top: 15px;
   padding: 8px 14px;
   background: #FFFFFF;
   border: 1px solid #e9e9e9;
@@ -42,12 +42,16 @@
   font-size: 16px;
 }
 
-.popup__input_error {
-  border: 2px solid #ff7979;
-
+.auth-form__input:focus {
+  outline: none;
+  border: 1px solid #212529;
 }
 
-.popup__btn {
+.auth-form__input_error {
+  border: 1px solid #ff7979;
+}
+
+.auth-form__btn {
   margin-top: 15px;
   width: 100%;
   padding: 8px 35px;
@@ -60,6 +64,20 @@
   transition: background-color 0.2s;
 }
 
-.popup__btn:hover {
+.auth-form__btn:hover {
   background-color: #49c790;
+}
+
+.auth-form__btn:disabled {
+  background-color: #9febca;
+}
+
+.auth-form__error {
+  text-align: left;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  color: #ff7979;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
 }
