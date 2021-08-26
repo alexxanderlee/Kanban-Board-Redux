@@ -35,6 +35,7 @@ const Popup: React.FC<PopupProps> = () => {
                 name="username"
                 validate={required}
                 placeholder={'Enter a name'}
+                autoFocus={true}
                 component={InputField}
               />
               <div className="auth-form__btn">

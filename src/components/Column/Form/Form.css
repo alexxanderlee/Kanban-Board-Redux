@@ -39,29 +39,8 @@
 }
 
 .add-col-form__btn {
+  display: inline-block;
   margin-top: 10px;
-  padding: 8px 25px;
-  border-radius: 4px;
-  font-weight: 500;
-  border: none;
-  transition: background-color 0.2s;
-}
-
-.add-col-form__btn_ok {
   margin-right: 10px;
-  background-color: #4DD599;
-  color: #FFFFFF;
-}
-
-.add-col-form__btn_ok:hover {
-  background-color: #49c790;
-}
-
-.add-col-form__btn_cancel {
-  background-color: #F4F6F8;
-  color:#9C9C9C;
-}
-
-.add-col-form__btn_cancel:hover {
-  background-color: #eeeeee;
+  width: 100px;
 }
