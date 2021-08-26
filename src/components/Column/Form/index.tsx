@@ -39,16 +39,17 @@ const AddColumnForm: React.FunctionComponent = () => {
                   <div className="add-col-form__btn">
                     <Button
                       type="submit"
-                      variant="green"
                       disabled={submitting || pristine}
-                    >Add</Button>
+                      text="Add"
+                    />
                   </div>
                   <div className="add-col-form__btn">
                     <Button
                       type="submit"
                       variant="gray"
                       onClick={() => setShowForm(false)}
-                    >Cancel</Button>
+                      text="Cancel"
+                    />
                   </div>
                 </form>
               )}

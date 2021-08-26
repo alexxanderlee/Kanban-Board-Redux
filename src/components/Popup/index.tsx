@@ -41,9 +41,9 @@ const Popup: React.FC<PopupProps> = () => {
               <div className="auth-form__btn">
                 <Button
                   type="submit"
-                  variant="green"
                   disabled={props.submitting || props.pristine}
-                >OK</Button>
+                  text="OK"
+                />
               </div>
             </form>
           )}

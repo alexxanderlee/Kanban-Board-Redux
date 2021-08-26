@@ -3,13 +3,13 @@ import './Button.css';
 
 interface IButtonProps {
   type?: 'submit' | 'button' | 'reset';
-  variant: 'green' | 'gray';
+  variant?: 'green' | 'gray';
   disabled?: boolean;
-  children?: string;
+  text?: string;
   onClick?: () => void;
 }
 
-const Button: React.FC<IButtonProps> = ({ type, variant, disabled, children, onClick }) => {
+const Button: React.FC<IButtonProps> = ({ type = 'button', variant = 'green', disabled, text, onClick }) => {
   let className = 'button';
   if (variant === 'green') {
     className += ' button_green';
@@ -20,11 +20,11 @@ const Button: React.FC<IButtonProps> = ({ type, variant, disabled, children, onC
 
   return (
     <button
-      type={type ?? 'button'}
+      type={type}
       disabled={disabled}
       className={className}
-      onClick={!disabled ? onClick : undefined}
-    >{children}</button>
+      onClick={onClick}
+    >{text}</button>
   );
 };
 
