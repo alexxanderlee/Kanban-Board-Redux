@@ -3,6 +3,7 @@ import { Form, Field } from 'react-final-form';
 import './Popup.css';
 import { useAppDispatch } from '../../redux/store';
 import { userActions } from '../../redux/features/user';
+import { InputField, Button } from '../UI';
 
 interface PopupProps {
 }
@@ -30,24 +31,19 @@ const Popup: React.FC<PopupProps> = () => {
           render={(props) => (
             <form onSubmit={props.handleSubmit} className="auth-form">
               <h2 className="auth-form__title">Enter your name</h2>
-              <Field name="username" validate={required} >
-                {({ input, meta }) => (
-                  <>
-                    {meta.error && meta.touched && <div className="auth-form__error">{meta.error}</div>}
-                    <input
-                      {...input}
-                      type="text"
-                      className={meta.error && meta.touched ? 'auth-form__input auth-form__input_error' : 'auth-form__input'}
-                      placeholder="Name"
-                    />
-                  </>
-                )}
-              </Field>
-              <button
-                type="submit"
-                className="auth-form__btn"
-                disabled={props.submitting || props.pristine}
-              >OK</button>
+              <Field
+                name="username"
+                validate={required}
+                placeholder={'Enter a name'}
+                component={InputField}
+              />
+              <div className="auth-form__btn">
+                <Button
+                  type="submit"
+                  variant="green"
+                  disabled={props.submitting || props.pristine}
+                >OK</Button>
+              </div>
             </form>
           )}
         />
