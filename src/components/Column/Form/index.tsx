@@ -45,7 +45,6 @@ const AddColumnForm: React.FunctionComponent = () => {
                   </div>
                   <div className="add-col-form__btn">
                     <Button
-                      type="submit"
                       variant="gray"
                       onClick={() => setShowForm(false)}
                       text="Cancel"

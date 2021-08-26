@@ -1,11 +1,12 @@
 import React from 'react';
+import { Form, Field } from 'react-final-form';
 import './List.css';
 import { CardItem } from '../../Card';
+import { InputField, Button } from '../../UI';
 import { useAppSelector, useAppDispatch } from '../../../redux/store';
 import { cardsSelectors, cardsActions } from '../../../redux/features/cards';
 import { userSelectors } from '../../../redux/features/user';
 import { ICard } from '../../../interfaces';
-import { isEmptyStr } from '../../../utils';
 
 interface ICardsListProps {
   columnId: string;
@@ -13,28 +14,22 @@ interface ICardsListProps {
 
 const CardsList: React.FunctionComponent<ICardsListProps> = ({ columnId }) => {
   const dispatch = useAppDispatch();
+
   const cards: ICard[] = useAppSelector((state) => cardsSelectors.getCardsByColumnId(state, columnId));
   const username: string = useAppSelector(userSelectors.getUserName);
 
   const [showForm, setShowForm] = React.useState<boolean>(false);
-  const [inputValue, setInputValue] = React.useState<string>('');
 
-  function onChangeInput(event: React.ChangeEvent<HTMLTextAreaElement>) {
-    setInputValue(event.target.value);
+  interface FormValues {
+    title: string;
   }
 
-  function hideForm() {
+  function onSubmit(values: FormValues) {
+    dispatch(cardsActions.addCard(columnId, username, values.title));
     setShowForm(false);
-    setInputValue('');
   }
 
-  function addCard() {
-    if (isEmptyStr(inputValue)) {
-      return;
-    }
-    dispatch(cardsActions.addCard(columnId, username, inputValue));
-    hideForm();
-  }
+  const required = (value: string) => (value ? undefined : 'Required');
 
   return (
     <div className="cards-list">
@@ -43,25 +38,34 @@ const CardsList: React.FunctionComponent<ICardsListProps> = ({ columnId }) => {
       ))}
       {
         showForm
-          ? <form className="add-card-form">
-              <textarea
-                className="add-card-form__input"
-                placeholder="Enter a title"
-                value={inputValue}
-                onChange={onChangeInput}
-                autoFocus
-              ></textarea>
-              <button 
-                type="button"
-                className="add-card-form__btn add-card-form__btn_green"
-                onClick={addCard}
-              >Add</button>
-              <button
-                type="button"
-                className="add-card-form__btn add-card-form__btn_gray"
-                onClick={hideForm}
-              >Cancel</button>
-            </form>
+          ? <Form
+              onSubmit={onSubmit}
+              render={({ handleSubmit, submitting, pristine }) => (
+                <form className="add-card-form" onSubmit={handleSubmit}>
+                  <Field
+                    name="title"
+                    placeholder="Enter a title"
+                    autoFocus
+                    validate={required}
+                    component={InputField}
+                  />
+                  <div className="add-card-form__btn">
+                    <Button
+                      type="submit"
+                      disabled={submitting || pristine}
+                      text="Add"
+                    />
+                  </div>
+                  <div className="add-card-form__btn">
+                    <Button
+                      variant="gray"
+                      onClick={() => setShowForm(false)}
+                      text="Cancel"
+                    />
+                  </div>
+                </form>
+              )}
+            />
           : <div onClick={() => setShowForm(true)} className="add-card-btn">
               <i className="bi bi-plus-lg"></i>
               <span>Add a card...</span>

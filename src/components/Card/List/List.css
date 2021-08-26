@@ -21,42 +21,8 @@
   margin-top: 10px;
 }
 
-.add-card-form__input {
-  display: block;
-  width: 100%;
-  height: 100px;
-  padding: 8px 14px;
-  background: #FFFFFF;
-  border: 1px solid #e9e9e9;
-  border-radius: 4px;
-  font-size: 14px;
-  resize: none;
-}
-
 .add-card-form__btn {
-  margin-top: 14px;
-  padding: 8px 25px;
-  border-radius: 4px;
-  font-weight: 500;
-  border: none;
-  transition: background-color 0.2s;
-}
-
-.add-card-form__btn_green {
-  margin-right: 14px;
-  background-color: #4DD599;
-  color: #FFFFFF;
-}
-
-.add-card-form__btn_green:hover {
-  background-color: #49c790;
-}
-
-.add-card-form__btn_gray {
-  background-color: #F4F6F8;
-  color:#9C9C9C;
-}
-
-.add-card-form__btn_gray:hover {
-  background-color: #eeeeee;
+  margin-top: 10px;
+  margin-right: 10px;
+  display: inline-block;
 }
