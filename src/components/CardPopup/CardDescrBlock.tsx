@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Form, Field } from 'react-final-form';
+import { Button, TextAreaField } from '../UI';
 import { useAppDispatch } from '../../redux/store';
 import { cardsActions } from '../../redux/features/cards';
 import { isEmptyStr } from '../../utils';
@@ -11,42 +13,41 @@ interface CardDescrBlockProps {
 const CardDescrBlock: React.FC<CardDescrBlockProps> = ({ cardId, description }) => {
   const dispatch = useAppDispatch();
   const [showEditForm, setShowEditForm] = useState<boolean>(false);
-  const [inputValue, setInputValue] = useState<string | null>(description);
 
-  function onChangeInputValue(event: React.ChangeEvent<HTMLTextAreaElement>): void {
-    setInputValue(event.target.value);
-  }
-
-  function clearDescr(): void {
+  function clearDescr() {
     dispatch(cardsActions.editCardDescr(cardId, null));
-    setInputValue('');
   }
 
-  function submitDescrForm(): void {
-    if (inputValue && isEmptyStr(inputValue)) {
-      closeDescrForm();
-      return;
+  function submitDescrForm(values: { descr: string }) {
+    if (isEmptyStr(values.descr)) {
+      return { descr: 'Require' };
     }
-    dispatch(cardsActions.editCardDescr(cardId, inputValue));
+    dispatch(cardsActions.editCardDescr(cardId, values.descr));
     setShowEditForm(false);
-  }
-
-  function closeDescrForm(): void {
-    setShowEditForm(false);
-    setInputValue(description);
   }
 
   const editDescrForm: React.ReactNode = (
-    <div className="card-descr__edit-block">
-      <textarea
-        className="card-descr__textarea"
-        placeholder="Write a description..."
-        value={inputValue ?? ''}
-        onChange={onChangeInputValue}
-      ></textarea>
-      <button type="button" className="card-descr__btn card-descr__btn_green" onClick={submitDescrForm}>Save</button>
-      <button type="button" className="card-descr__btn card-descr__btn_gray" onClick={closeDescrForm}>Cancel</button>
-    </div>
+    <Form
+      onSubmit={submitDescrForm}
+      initialValues={{ descr: description }}
+      render={({ handleSubmit, submitting, pristine }) => (
+        <form onSubmit={handleSubmit} className="card-descr__form">
+          <div className="card-descr__input">
+            <Field
+              name="descr"
+              placeholder="Write a description..."
+              component={TextAreaField}
+            />
+          </div>
+          <div className="card-descr__btn">
+            <Button type="submit" text="Save" disabled={ submitting || pristine } />
+          </div>
+          <div className="card-descr__btn">
+            <Button variant="gray" text="Cancel" onClick={() => setShowEditForm(false)} />
+          </div>
+        </form>
+      )}
+    />
   );
 
   return (
