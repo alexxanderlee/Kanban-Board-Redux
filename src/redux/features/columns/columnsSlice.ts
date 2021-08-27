@@ -5,11 +5,6 @@ export interface ColumnsState {
   items: IColumn[];
 }
 
-interface EditTitlePaylaod {
-  columnId: string;
-  newTitle: string;
-}
-
 const initialState: ColumnsState = {
   items: [
     {
@@ -37,8 +32,7 @@ const columnsSlice = createSlice({
   reducers: {
     addColumn: {
       reducer: (state, action: PayloadAction<IColumn>) => {
-        const newColumn: IColumn = action.payload;
-        state.items.push(newColumn);
+        state.items.push(action.payload);
       },
       prepare: (title: string) => {
         const id = Date.now().toString(16);
@@ -46,22 +40,14 @@ const columnsSlice = createSlice({
       }
     },
     deleteColumn: (state, action: PayloadAction<string>) => {
-      const columnId: string = action.payload;
-      state.items = state.items.filter(column => {
-        if (column.id === columnId) {
-          return false;
-        }
-        return true;
-      });
+      state.items = state.items.filter(column => column.id !== action.payload);
     },
-    editTitle: (state, action: PayloadAction<EditTitlePaylaod>) => {
-      const { columnId, newTitle } = action.payload;
-      state.items.some(column => {
-        if (column.id === columnId) {
-          column.title = newTitle;
-          return true;
+    updateColumn: (state, action: PayloadAction<IColumn>) => {
+      state.items = state.items.map(column => {
+        if (column.id === action.payload.id) {
+          return action.payload;
         }
-        return false;
+        return column;
       });
     },
   },

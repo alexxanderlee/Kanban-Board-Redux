@@ -5,16 +5,18 @@ import './TextAreaField.css';
 interface TextAreaFieldProps extends FieldRenderProps<string> {
   placeholder?: string;
   rows?: number;
+  autoFocus?: boolean
 }
 
-const TextAreaField: React.FC<TextAreaFieldProps> = ({ input, meta, placeholder, rows = 4 }) => {
-  
+const TextAreaField: React.FC<TextAreaFieldProps> = ({ input, meta, placeholder, autoFocus, rows = 4 }) => {
+  console.log(meta)
   return (
     <textarea
       {...input}
-      className={meta.submitError ? 'textarea textarea_err' : 'textarea'}
+      className={meta.error && !meta.pristine ? 'textarea textarea_err' : 'textarea'}
       rows={rows}
       placeholder={placeholder}
+      autoFocus={autoFocus}
     ></textarea>
   );
 };

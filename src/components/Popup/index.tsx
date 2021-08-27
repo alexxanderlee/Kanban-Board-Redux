@@ -8,13 +8,14 @@ import { InputField, Button } from '../UI';
 interface PopupProps {
 }
 
+interface FormValues {
+  username: string;
+}
+
 const Popup: React.FC<PopupProps> = () => {
   const dispatch = useAppDispatch();
   const [popupVisible, setPopupVisible] = useState<boolean>(true);
 
-  interface FormValues {
-    username: string;
-  }
 
   function onSubmit(values: FormValues) {
     dispatch(userActions.setUser(values.username));

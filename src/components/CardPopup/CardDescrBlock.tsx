@@ -4,38 +4,41 @@ import { Button, TextAreaField } from '../UI';
 import { useAppDispatch } from '../../redux/store';
 import { cardsActions } from '../../redux/features/cards';
 import { isEmptyStr } from '../../utils';
+import { ICard } from '../../interfaces';
 
 interface CardDescrBlockProps {
-  cardId: string;
-  description: string | null;
+  card: ICard;
 }
 
-const CardDescrBlock: React.FC<CardDescrBlockProps> = ({ cardId, description }) => {
+const CardDescrBlock: React.FC<CardDescrBlockProps> = ({ card }) => {
   const dispatch = useAppDispatch();
   const [showEditForm, setShowEditForm] = useState<boolean>(false);
 
   function clearDescr() {
-    dispatch(cardsActions.editCardDescr(cardId, null));
+    const payload: ICard = { ...card, descr: null };
+    dispatch(cardsActions.updateCard(payload));
   }
 
   function submitDescrForm(values: { descr: string }) {
     if (isEmptyStr(values.descr)) {
       return { descr: 'Require' };
     }
-    dispatch(cardsActions.editCardDescr(cardId, values.descr));
+    const payload: ICard = { ...card, descr: values.descr };
+    dispatch(cardsActions.updateCard(payload));
     setShowEditForm(false);
   }
 
   const editDescrForm: React.ReactNode = (
     <Form
       onSubmit={submitDescrForm}
-      initialValues={{ descr: description }}
+      initialValues={{ descr: card.descr }}
       render={({ handleSubmit, submitting, pristine }) => (
         <form onSubmit={handleSubmit} className="card-descr__form">
           <div className="card-descr__input">
             <Field
               name="descr"
               placeholder="Write a description..."
+              autoFocus={true}
               component={TextAreaField}
             />
           </div>
@@ -53,7 +56,7 @@ const CardDescrBlock: React.FC<CardDescrBlockProps> = ({ cardId, description }) 
   return (
     <div className="card-descr">
       <h3 className="card-popup__subtitle">Description</h3>
-      {description && !showEditForm && (<>
+      {card.descr && !showEditForm && (<>
         <button
           type="button"
           className="bi bi-pencil-fill card-descr__edit-btn"
@@ -67,12 +70,12 @@ const CardDescrBlock: React.FC<CardDescrBlockProps> = ({ cardId, description }) 
         >Clear</button>
       </>)}
 
-      {description && (
+      {card.descr && (
         showEditForm
           ? editDescrForm
-          : <div className="card-descr__text">{description}</div>
+          : <div className="card-descr__text">{card.descr}</div>
       )}
-      {!description && (
+      {!card.descr && (
         showEditForm
           ? editDescrForm
           : <div className="card-descr__add-btn" onClick={() => setShowEditForm(true)}>

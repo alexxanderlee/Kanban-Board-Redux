@@ -17,8 +17,8 @@ interface CardPopupProps {
 
 const CardPopup: React.FC<CardPopupProps> = ({ cardId }) => {
   const dispatch = useAppDispatch();
-  const data: ICard = useAppSelector(state => cardsSelectors.getCardById(state, cardId));
-  const column: IColumn = useAppSelector(state => columnsSelectors.getColumnById(state, data.columnId));
+  const card: ICard = useAppSelector(state => cardsSelectors.getCardById(state, cardId));
+  const column: IColumn = useAppSelector(state => columnsSelectors.getColumnById(state, card.columnId));
 
   const [showTitleEdit, setShowTitleEdit] = useState<boolean>(false);
 
@@ -26,7 +26,8 @@ const CardPopup: React.FC<CardPopupProps> = ({ cardId }) => {
     if (isEmptyStr(values.title)) {
       return { title: 'Required' };
     }
-    dispatch(cardsActions.editCardTitle(cardId, values.title));
+    const payload: ICard = { ...card, title: values.title };
+    dispatch(cardsActions.updateCard(payload));
   }
 
   function hidePopup() {
@@ -36,14 +37,14 @@ const CardPopup: React.FC<CardPopupProps> = ({ cardId }) => {
   return (
     <div className="card-popup" onMouseDown={hidePopup}>
       <div className="card-popup__window" onMouseDown={e => e.stopPropagation()}>
-        {data && (
+        {card && (
           <div className="card-popup__wrapper">
             <div className="card-popup__header">
               {
                 showTitleEdit
                   ? <Form
                       onSubmit={onSubmit}
-                      initialValues={{ title: data.title }}
+                      initialValues={{ title: card.title }}
                       render={({ handleSubmit, form }) => (
                         <form onSubmit={handleSubmit} className="card-popup__title-form">
                           <Field
@@ -57,17 +58,17 @@ const CardPopup: React.FC<CardPopupProps> = ({ cardId }) => {
                       )}
                     />
                   : <h2 className="card-popup__title" onClick={() => setShowTitleEdit(true)}>
-                      {data.title}
+                      {card.title}
                       <i className="bi bi-pencil-fill card-popup__title-edit"></i>
                     </h2>
               }
               <div className="bi bi-x-lg card-popup__close-btn" onClick={hidePopup}></div>
             </div>
             <div className="card-popup__column-name">in column "{column.title}"</div>
-            <div className="card-popup__author-name">{data.author}</div>
+            <div className="card-popup__author-name">{card.author}</div>
             <div className="card-popup__content">
-              <CardDescrBlock cardId={data.id} description={data.descr} />
-              <CommentsList cardId={data.id} columnId={data.columnId} />
+              <CardDescrBlock card={card} />
+              <CommentsList cardId={card.id} columnId={card.columnId} />
             </div>
           </div>
         )}

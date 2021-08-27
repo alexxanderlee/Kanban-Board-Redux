@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import calendar from 'dayjs/plugin/calendar';
 import './Item.css';
 import { Button, TextAreaField } from '../../UI';
-import { isEmptyStr } from '../../../utils';
+import { required } from '../../../utils';
 import { useAppDispatch } from '../../../redux/store';
 import { commentsActions } from '../../../redux/features/comments';
 import { IComment } from '../../../interfaces';
@@ -25,9 +25,6 @@ const CommentItem: React.FC<ICommentItemProps> = ({ data }) => {
   }
 
   function submitEditForm(values: { text: string }) {
-    if (isEmptyStr(values.text)) {
-      return { text: 'Require' };
-    }
     dispatch(commentsActions.editCommentText(data.id, values.text));
     setShowEditForm(false);
   }
@@ -41,6 +38,8 @@ const CommentItem: React.FC<ICommentItemProps> = ({ data }) => {
           <Field
             name="text"
             rows={3}
+            autoFocus={true}
+            validate={required}
             component={TextAreaField}
           />
           <div className="edit-comment__btn">

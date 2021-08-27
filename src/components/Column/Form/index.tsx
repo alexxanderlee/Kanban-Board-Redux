@@ -4,7 +4,7 @@ import './Form.css';
 import { useAppDispatch } from '../../../redux/store';
 import { columnsActions } from '../../../redux/features/columns';
 import { InputField, Button } from '../../UI';
-import { isEmptyStr } from '../../../utils';
+import { required } from '../../../utils';
 
 const AddColumnForm: React.FunctionComponent = () => {
   const dispatch = useAppDispatch();
@@ -12,9 +12,6 @@ const AddColumnForm: React.FunctionComponent = () => {
   const [showForm, setShowForm] = useState<boolean>(false);
 
   function onSubmit(values: { title: string }) {
-    if (isEmptyStr(values.title)) {
-      return { title: 'Required' };
-    }
     dispatch(columnsActions.addColumn(values.title));
     setShowForm(false);
   }
@@ -31,6 +28,7 @@ const AddColumnForm: React.FunctionComponent = () => {
                     name="title"
                     placeholder="Enter a column title"
                     autoFocus
+                    validate={required}
                     component={InputField}
                   />
                   <div className="add-col-form__btn">

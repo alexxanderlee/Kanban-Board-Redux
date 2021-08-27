@@ -21,11 +21,7 @@ const ColumnItem: React.FC<ColumnItemProps> = ({ id, title }) => {
     if (isEmptyStr(values.title)) {
       return { title: 'Required' };
     }
-    const payload = {
-      columnId: id,
-      newTitle: values.title
-    };
-    dispatch(columnsActions.editTitle(payload));
+    dispatch(columnsActions.updateColumn({ id, title: values.title }));
   }
 
   function deleteColumn() {

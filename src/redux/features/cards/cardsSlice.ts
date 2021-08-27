@@ -6,20 +6,6 @@ interface CardsState {
   items: ICard[],
 }
 
-interface EditCardPayload<T extends keyof ICard> {
-  cardId: string;
-  value: ICard[T];
-}
-
-function editCard<T extends keyof ICard>(cards: ICard[], id: string, key: T, value: ICard[T]) {
-  return cards.map(card => {
-    if (card.id === id) {
-      card[key] = value;
-    }
-    return card;
-  });
-}
-
 const initialState: CardsState = {
   items: [],
 };
@@ -30,8 +16,7 @@ const cardsSlice = createSlice({
   reducers: {
     addCard: {
       reducer: (state, action: PayloadAction<ICard>) => {
-        const card: ICard = action.payload;
-        state.items.push(card);
+        state.items.push(action.payload);
       },
       prepare: (columnId, author, title) => {
         const card: ICard = {
@@ -45,22 +30,15 @@ const cardsSlice = createSlice({
       }
     },
     deleteCard: (state, action: PayloadAction<string>) => {
-      const cardId: string = action.payload;
-      state.items = state.items.filter(card => (card.id !== cardId));
+      state.items = state.items.filter(card => (card.id !== action.payload));
     },
-    editCardTitle: {
-      reducer: (state, action: PayloadAction<EditCardPayload<'title'>>) => {
-        const { cardId, value } = action.payload;
-        state.items = editCard<'title'>(state.items, cardId, 'title', value);
-      },
-      prepare: (cardId: string, value: string) => ({ payload: { cardId, value } }),
-    },
-    editCardDescr: {
-      reducer: (state, action: PayloadAction<EditCardPayload<'descr'>>) => {
-        const { cardId, value } = action.payload;
-        state.items = editCard<'descr'>(state.items, cardId, 'descr', value);
-      },
-      prepare: (cardId: string, value: string | null) => ({ payload: { cardId, value } }),
+    updateCard: (state, action: PayloadAction<ICard>) => {
+      state.items = state.items.map(card => {
+        if (card.id === action.payload.id) {
+          return action.payload;
+        }
+        return card;
+      });
     },
   },
   extraReducers: (builder) => {
