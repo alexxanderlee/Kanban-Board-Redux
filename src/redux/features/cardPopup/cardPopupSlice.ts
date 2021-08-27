@@ -14,14 +14,12 @@ const slice = createSlice({
   name: 'cardPopup',
   initialState,
   reducers: {
-    showPopup: (state) => {
-      state.isVisible = true;
-    },
     hidePopup: (state) => {
       state.isVisible = false;
       state.cardId = null;
     },
-    setCardId: (state, action: PayloadAction<string>) => {
+    setPopup: (state, action: PayloadAction<string>) => {
+      state.isVisible = true;
       state.cardId = action.payload;
     }
   }

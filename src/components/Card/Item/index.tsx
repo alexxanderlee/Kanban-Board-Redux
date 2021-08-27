@@ -22,9 +22,8 @@ const Card: React.FC<CardProps> = ({ id, title, descr }) => {
     }
   }
 
-  function handleClickCard(): void {
-    dispatch(cardPopupActions.setCardId(id));
-    dispatch(cardPopupActions.showPopup());
+  function handleClickCard() {
+    dispatch(cardPopupActions.setPopup(id));
   }
 
   return (
