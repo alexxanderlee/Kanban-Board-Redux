@@ -23,15 +23,15 @@
 }
 
 .button_gray {
-  background-color: #F4F6F8;
-  color:#9C9C9C;
+  background-color: #e4e4e4;
+  color:#949494;
 }
 
 .button_gray:hover {
-  background-color: #eeeeee;
+  background-color: #dadada;
 }
 
 .button_gray:disabled {
-  background-color: #f1f1f1;
+  background-color: #e4e4e4;
   color:#c0c0c0;
 }
