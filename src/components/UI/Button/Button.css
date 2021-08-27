@@ -35,3 +35,16 @@
   background-color: #e4e4e4;
   color:#c0c0c0;
 }
+
+.button_blue {
+  background-color: #4daad5;
+  color: #FFFFFF;
+}
+
+.button_blue:hover {
+  background-color: #4995c7;
+}
+
+.button_blue:disabled {
+  background-color: #8bc2e7;
+}

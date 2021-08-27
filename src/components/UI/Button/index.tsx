@@ -3,7 +3,7 @@ import './Button.css';
 
 interface IButtonProps {
   type?: 'submit' | 'button' | 'reset';
-  variant?: 'green' | 'gray';
+  variant?: 'green' | 'gray' | 'blue';
   disabled?: boolean;
   text?: string;
   onClick?: () => void;
@@ -16,6 +16,9 @@ const Button: React.FC<IButtonProps> = ({ type = 'button', variant = 'green', di
   }
   if (variant === 'gray') {
     className += ' button_gray';
+  }
+  if (variant === 'blue') {
+    className += ' button_blue';
   }
 
   return (
