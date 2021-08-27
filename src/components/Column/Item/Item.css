@@ -50,18 +50,19 @@
   opacity: 1;
 }
 
-.edit-title {
-  display: flex;
-}
-
 .edit-title__input {
-  flex: 1;
+  width: 100%;
   padding: 4px 10px;
   background: #FFFFFF;
   border: 1px solid #EFEFEF;
   box-sizing: border-box;
   border-radius: 4px;
   font-weight: 700;
+}
+
+.edit-title__input:focus {
+  outline: none;
+  border: 1px solid #212529;
 }
 
 .column__cards {

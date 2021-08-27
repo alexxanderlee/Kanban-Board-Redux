@@ -50,10 +50,14 @@
   font-size: 18px;
 }
 
-.card-popup__title-input {
+.card-popup__title-form {
   flex: 1;
   margin-right: 10px;
-  padding: 1px 5px;
+}
+
+.card-popup__title-input {
+  width: 100%;
+  padding: 3px 5px;
   background: #FFFFFF;
   border: 1px solid #EFEFEF;
   box-sizing: border-box;
@@ -61,6 +65,11 @@
   font-size: 26px;
   font-weight: 700;
   line-height: 26px;
+}
+
+.card-popup__title-input:focus {
+  outline: none;
+  border: 1px solid #212529;
 }
 
 .card-popup__subtitle {

@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { Form, Field } from 'react-final-form';
 import './Item.css';
-import { QuickInput, CardsList } from '../../../components';
+import { CardsList } from '../../../components';
+import { QuickInput } from '../../UI';
 import { useAppDispatch } from '../../../redux/store';
 import { columnsActions } from '../../../redux/features/columns';
+import { isEmptyStr } from '../../../utils';
 
 interface ColumnItemProps {
   id: string;
@@ -14,13 +17,15 @@ const ColumnItem: React.FC<ColumnItemProps> = ({ id, title }) => {
 
   const [editTitleVisible, setEditTitleVisible] = useState<boolean>(false);
 
-  function updateTitle(value: string): void {
+  function onSubmit(values: { title: string }) {
+    if (isEmptyStr(values.title)) {
+      return { title: 'Required' };
+    }
     const payload = {
       columnId: id,
-      newTitle: value
+      newTitle: values.title
     };
     dispatch(columnsActions.editTitle(payload));
-    setEditTitleVisible(false);
   }
 
   function deleteColumn() {
@@ -35,11 +40,20 @@ const ColumnItem: React.FC<ColumnItemProps> = ({ id, title }) => {
       {
         editTitleVisible
           ? <div className="edit-title">
-              <QuickInput
-                className={'edit-title__input'}
-                initialValue={title}
-                onSubmit={updateTitle}
-                onCancel={() => setEditTitleVisible(false)}
+              <Form
+                onSubmit={onSubmit}
+                initialValues={{ title }}
+                render={({ handleSubmit, form }) => (
+                  <form onSubmit={handleSubmit} className="edit-title__from">
+                    <Field
+                      name="title"
+                      className="edit-title__input"
+                      onSubmit={() => form.submit()}
+                      onCancel={() => setEditTitleVisible(false)}
+                      component={QuickInput}
+                    />
+                  </form>
+                )}
               />
             </div>
           : <div className="col-title">

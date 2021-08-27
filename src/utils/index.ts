@@ -1,1 +1,1 @@
-export const isEmptyStr = (str: string): boolean => (str.trim() === '');
+export const isEmptyStr = (str: string): boolean => (str ? (str.trim() === '') : true);
