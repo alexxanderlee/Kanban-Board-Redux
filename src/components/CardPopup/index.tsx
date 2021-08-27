@@ -31,7 +31,6 @@ const CardPopup: React.FC<CardPopupProps> = ({ cardId }) => {
 
   function hidePopup() {
     dispatch(cardPopupActions.hidePopup());
-    dispatch(cardPopupActions.resetCardId());
   }
 
   return (

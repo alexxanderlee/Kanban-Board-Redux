@@ -19,12 +19,10 @@ const slice = createSlice({
     },
     hidePopup: (state) => {
       state.isVisible = false;
+      state.cardId = null;
     },
     setCardId: (state, action: PayloadAction<string>) => {
       state.cardId = action.payload;
-    },
-    resetCardId: (state) => {
-      state.cardId = null;
     }
   }
 });
