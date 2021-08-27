@@ -7,6 +7,7 @@ import { useAppSelector, useAppDispatch } from '../../../redux/store';
 import { cardsSelectors, cardsActions } from '../../../redux/features/cards';
 import { userSelectors } from '../../../redux/features/user';
 import { ICard } from '../../../interfaces';
+import { isEmptyStr } from '../../../utils';
 
 interface ICardsListProps {
   columnId: string;
@@ -20,16 +21,13 @@ const CardsList: React.FunctionComponent<ICardsListProps> = ({ columnId }) => {
 
   const [showForm, setShowForm] = React.useState<boolean>(false);
 
-  interface FormValues {
-    title: string;
-  }
-
-  function onSubmit(values: FormValues) {
+  function onSubmit(values:  { title: string }) {
+    if (isEmptyStr(values.title)) {
+      return { title: 'Required' };
+    }
     dispatch(cardsActions.addCard(columnId, username, values.title));
     setShowForm(false);
   }
-
-  const required = (value: string) => (value ? undefined : 'Required');
 
   return (
     <div className="cards-list">
@@ -46,7 +44,6 @@ const CardsList: React.FunctionComponent<ICardsListProps> = ({ columnId }) => {
                     name="title"
                     placeholder="Enter a title"
                     autoFocus
-                    validate={required}
                     component={InputField}
                   />
                   <div className="add-card-form__btn">
