@@ -27,27 +27,44 @@
   justify-content: space-between;
 }
 
-.card-popup__title {
+.card-title {
   flex: 1;
-  padding: 3px 50px 5px 0;
+  display: flex;
+  padding: 6px 0 7px 0;
   position: relative;
   margin: 0;
   font-size: 26px;
+  line-height: 26px;
   font-weight: 700;
+}
+
+.card-title__btns {
+  margin-left: 15px;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.card-title:hover > .card-title__btns {
+  opacity: 1;
+}
+
+.card-title__text {
+  display: flex;
+  align-items: center;
+}
+
+.card-title__btn {
+  opacity: 0.5;
+  transition: opacity 0.2s;
+  font-size: 18px;
+  line-height: 20px;
   cursor: pointer;
 }
 
-.card-popup__title:hover > .card-popup__title-edit {
-  opacity: 0.5;
-}
-
-.card-popup__title-edit {
-  top: 5px;
-  right: 20px;
-  position: absolute;
-  opacity: 0;
-  transition: opacity 0.2s;
-  font-size: 18px;
+.card-title__btn:hover {
+  opacity: 1;
 }
 
 .card-popup__title-form {
@@ -57,7 +74,7 @@
 
 .card-popup__title-input {
   width: 100%;
-  padding: 3px 5px;
+  padding: 1px 5px;
   background: #FFFFFF;
   border: 1px solid #EFEFEF;
   box-sizing: border-box;

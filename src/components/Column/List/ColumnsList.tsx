@@ -1,6 +1,6 @@
 import React from 'react';
-import './List.css';
-import { ColumnItem, AddColumnForm } from '../../Column';
+import './ColumnsList.css';
+import { ColumnItem, ColumnForm } from '../../Column';
 import { useAppSelector } from '../../../redux/store';
 import { columnsSelectors } from '../../../redux/features/columns';
 import { IColumn } from '../../../interfaces';
@@ -13,11 +13,10 @@ const ColumnsList: React.FunctionComponent = () => {
       {columns.map(column => (
         <ColumnItem
           key={column.id}
-          id={column.id}
-          title={column.title}
+          column={column}
         />
       ))}
-      <AddColumnForm />
+      <ColumnForm />
     </div>
   );
 };

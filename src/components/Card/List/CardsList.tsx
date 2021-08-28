@@ -1,13 +1,13 @@
 import React from 'react';
 import { Form, Field } from 'react-final-form';
-import './List.css';
+import './CardsList.css';
 import { CardItem } from '../../Card';
 import { InputField, Button } from '../../UI';
 import { useAppSelector, useAppDispatch } from '../../../redux/store';
 import { cardsSelectors, cardsActions } from '../../../redux/features/cards';
 import { userSelectors } from '../../../redux/features/user';
 import { ICard } from '../../../interfaces';
-import { isEmptyStr } from '../../../utils';
+import { validators } from '../../../utils';
 
 interface ICardsListProps {
   columnId: string;
@@ -22,9 +22,6 @@ const CardsList: React.FunctionComponent<ICardsListProps> = ({ columnId }) => {
   const [showForm, setShowForm] = React.useState<boolean>(false);
 
   function onSubmit(values:  { title: string }) {
-    if (isEmptyStr(values.title)) {
-      return { title: 'Required' };
-    }
     dispatch(cardsActions.addCard(columnId, username, values.title));
     setShowForm(false);
   }
@@ -32,7 +29,7 @@ const CardsList: React.FunctionComponent<ICardsListProps> = ({ columnId }) => {
   return (
     <div className="cards-list">
       {cards && cards.map(card => (
-        <CardItem key={card.id} id={card.id} title={card.title} descr={card.descr} />
+        <CardItem key={card.id} card={card} />
       ))}
       {
         showForm
@@ -44,6 +41,7 @@ const CardsList: React.FunctionComponent<ICardsListProps> = ({ columnId }) => {
                     name="title"
                     placeholder="Enter a title"
                     autoFocus
+                    validate={validators.required}
                     component={InputField}
                   />
                   <div className="add-card-form__btn">

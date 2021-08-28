@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Form, Field } from 'react-final-form';
-import './Form.css';
+import './ColumnForm.css';
 import { useAppDispatch } from '../../../redux/store';
 import { columnsActions } from '../../../redux/features/columns';
 import { InputField, Button } from '../../UI';
-import { required } from '../../../utils';
+import { validators } from '../../../utils';
 
-const AddColumnForm: React.FunctionComponent = () => {
+const ColumnForm: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const [showForm, setShowForm] = useState<boolean>(false);
@@ -28,7 +28,7 @@ const AddColumnForm: React.FunctionComponent = () => {
                     name="title"
                     placeholder="Enter a column title"
                     autoFocus
-                    validate={required}
+                    validate={validators.required}
                     component={InputField}
                   />
                   <div className="add-col-form__btn">
@@ -58,4 +58,4 @@ const AddColumnForm: React.FunctionComponent = () => {
   );
 };
 
-export default AddColumnForm;
+export default ColumnForm;

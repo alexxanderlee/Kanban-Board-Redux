@@ -9,7 +9,6 @@ interface TextAreaFieldProps extends FieldRenderProps<string> {
 }
 
 const TextAreaField: React.FC<TextAreaFieldProps> = ({ input, meta, placeholder, autoFocus, rows = 4 }) => {
-  console.log(meta)
   return (
     <textarea
       {...input}

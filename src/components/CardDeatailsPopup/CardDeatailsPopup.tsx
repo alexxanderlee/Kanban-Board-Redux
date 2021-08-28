@@ -1,37 +1,29 @@
 import React, { useState } from 'react';
 import { Form, Field } from 'react-final-form';
-import './CardPopup.css';
+import './CardDeatailsPopup.css';
 import { CommentsList } from '../../components';
 import { QuickInput } from '../UI';
-import CardDescrBlock from './CardDescrBlock';
+import CardDescrBlock from './CardDescr';
 import { useAppSelector, useAppDispatch } from '../../redux/store';
-import { cardsSelectors, cardsActions } from '../../redux/features/cards';
-import { cardPopupActions } from '../../redux/features/cardPopup';
+import { cardsActions } from '../../redux/features/cards';
 import { columnsSelectors } from '../../redux/features/columns';
 import { ICard, IColumn } from '../../interfaces';
-import { isEmptyStr } from '../../utils';
+import { validators } from '../../utils';
 
-interface CardPopupProps {
-  cardId: string;
+interface Props {
+  card: ICard;
+  hidePopup: () => void;
 }
 
-const CardPopup: React.FC<CardPopupProps> = ({ cardId }) => {
+const CardDeatailsPopup: React.FC<Props> = ({ card, hidePopup }) => {
   const dispatch = useAppDispatch();
-  const card: ICard = useAppSelector(state => cardsSelectors.getCardById(state, cardId));
   const column: IColumn = useAppSelector(state => columnsSelectors.getColumnById(state, card.columnId));
 
   const [showTitleEdit, setShowTitleEdit] = useState<boolean>(false);
 
   function onSubmit(values: { title: string }) {
-    if (isEmptyStr(values.title)) {
-      return { title: 'Required' };
-    }
     const payload: ICard = { ...card, title: values.title };
     dispatch(cardsActions.updateCard(payload));
-  }
-
-  function hidePopup() {
-    dispatch(cardPopupActions.hidePopup());
   }
 
   return (
@@ -52,14 +44,17 @@ const CardPopup: React.FC<CardPopupProps> = ({ cardId }) => {
                             className="card-popup__title-input"
                             onCancel={() => setShowTitleEdit(false)}
                             onSubmit={() => form.submit()}
+                            validate={validators.required}
                             component={QuickInput}
                           />
                         </form>
                       )}
                     />
-                  : <h2 className="card-popup__title" onClick={() => setShowTitleEdit(true)}>
-                      {card.title}
-                      <i className="bi bi-pencil-fill card-popup__title-edit"></i>
+                  : <h2 className="card-title">
+                      <div className="card-title__text">{card.title}</div>
+                      <div className="card-title__btns">
+                        <i className="bi bi-pencil-fill card-title__btn" onClick={() => setShowTitleEdit(true)}></i>
+                      </div>
                     </h2>
               }
               <div className="bi bi-x-lg card-popup__close-btn" onClick={hidePopup}></div>
@@ -77,4 +72,4 @@ const CardPopup: React.FC<CardPopupProps> = ({ cardId }) => {
   );
 };
 
-export default CardPopup;
+export default CardDeatailsPopup;

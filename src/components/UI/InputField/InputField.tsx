@@ -12,7 +12,7 @@ const InputField: React.FC<InputFieldProps> = ({ meta, input, placeholder, autoF
     <input
       {...input}
       type="text"
-      className={meta.submitError ? 'input input_error' : 'input'}
+      className={meta.error && !meta.pristine ? 'input input_error' : 'input'}
       placeholder={placeholder}
       autoFocus={autoFocus}
     />

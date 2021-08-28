@@ -7,11 +7,6 @@ interface CommentsState {
   items: IComment[],
 }
 
-interface EditCommentTextPayload {
-  commentId: string;
-  newText: string;
-}
-
 const initialState: CommentsState = {
   items: [],
 };
@@ -22,8 +17,7 @@ const commentsSlice = createSlice({
   reducers: {
     addComment: {
       reducer: (state, action: PayloadAction<IComment>) => {
-        const comment: IComment = action.payload;
-        state.items.push(comment);
+        state.items.push(action.payload);
       },
       prepare: (cardId, columnId, author, text) => {
         const comment: IComment = {
@@ -39,31 +33,18 @@ const commentsSlice = createSlice({
       }
     },
     deleteComment: (state, action: PayloadAction<string>) => {
-      const commentId: string = action.payload;
-      state.items = state.items.filter(comment => (comment.id !== commentId));
+      state.items = state.items.filter(comment => (comment.id !== action.payload));
     },
-    editCommentText: {
-      reducer: (state, action: PayloadAction<EditCommentTextPayload>) => {
-        const { commentId, newText } = action.payload;
-        state.items = state.items.map(comment => {
-          if (comment.id === commentId) {
-            comment.text = newText;
-            comment.isEdited = true;
-          }
-          return comment;
-        });
-      },
-      prepare: (commentId, newText) => ({ payload: { commentId, newText } })
-    }
+    updateComment: (state, action: PayloadAction<IComment>) => {
+      state.items = state.items.map(comment => (comment.id === action.payload.id) ? action.payload : comment);
+    },
   },
   extraReducers: (builder) =>{
     builder.addCase(cardsActions.deleteCard, (state, action) => {
-      const cardId: string = action.payload;
-      state.items = state.items.filter(comment => (comment.cardId !== cardId));
+      state.items = state.items.filter(comment => (comment.cardId !== action.payload));
     })
     builder.addCase(columnsActions.deleteColumn, (state, action) => {
-      const columnId: string = action.payload;
-      state.items = state.items.filter(comment => (comment.columnId !== columnId));
+      state.items = state.items.filter(comment => (comment.columnId !== action.payload));
     })
   },
 });

@@ -13,7 +13,7 @@ const QuickInput: React.FC<QuickInputProps> = ({ input, meta, className, onSubmi
     const key: string = event.key;
     switch (key) {
       case 'Enter':
-        if (!meta.submitError && meta.dirty) {
+        if (!meta.error && !meta.pristine) {
           onSubmit();
         }
         onCancel();
@@ -25,7 +25,7 @@ const QuickInput: React.FC<QuickInputProps> = ({ input, meta, className, onSubmi
   }
 
   function onBlur() {
-    if (!meta.submitError && meta.dirty) {
+    if (!meta.error && !meta.pristine) {
       onSubmit();
     }
     onCancel();

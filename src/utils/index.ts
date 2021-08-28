@@ -1,3 +1,5 @@
-export const isEmptyStr = (str: string): boolean => (str ? (str.trim() === '') : true);
+const isEmptyStr = (str: string): boolean => (str ? (str.trim() === '') : true);
 
-export const required = (value: string) => (!isEmptyStr(value) ? undefined : 'Required');
+export const validators = {
+  required: (value: string) => (!isEmptyStr(value) ? undefined : 'Required'),
+};

@@ -43,12 +43,7 @@ const columnsSlice = createSlice({
       state.items = state.items.filter(column => column.id !== action.payload);
     },
     updateColumn: (state, action: PayloadAction<IColumn>) => {
-      state.items = state.items.map(column => {
-        if (column.id === action.payload.id) {
-          return action.payload;
-        }
-        return column;
-      });
+      state.items = state.items.map(column => (column.id === action.payload.id) ? action.payload : column);
     },
   },
 });

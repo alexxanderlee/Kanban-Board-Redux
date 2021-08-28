@@ -3,14 +3,14 @@ import { Form, Field } from 'react-final-form';
 import { Button, TextAreaField } from '../UI';
 import { useAppDispatch } from '../../redux/store';
 import { cardsActions } from '../../redux/features/cards';
-import { isEmptyStr } from '../../utils';
+import { validators } from '../../utils';
 import { ICard } from '../../interfaces';
 
-interface CardDescrBlockProps {
+interface CardDescrProps {
   card: ICard;
 }
 
-const CardDescrBlock: React.FC<CardDescrBlockProps> = ({ card }) => {
+const CardDescr: React.FC<CardDescrProps> = ({ card }) => {
   const dispatch = useAppDispatch();
   const [showEditForm, setShowEditForm] = useState<boolean>(false);
 
@@ -20,9 +20,6 @@ const CardDescrBlock: React.FC<CardDescrBlockProps> = ({ card }) => {
   }
 
   function submitDescrForm(values: { descr: string }) {
-    if (isEmptyStr(values.descr)) {
-      return { descr: 'Require' };
-    }
     const payload: ICard = { ...card, descr: values.descr };
     dispatch(cardsActions.updateCard(payload));
     setShowEditForm(false);
@@ -39,6 +36,7 @@ const CardDescrBlock: React.FC<CardDescrBlockProps> = ({ card }) => {
               name="descr"
               placeholder="Write a description..."
               autoFocus={true}
+              validate={validators.required}
               component={TextAreaField}
             />
           </div>
@@ -87,4 +85,4 @@ const CardDescrBlock: React.FC<CardDescrBlockProps> = ({ card }) => {
   );
 };
 
-export default CardDescrBlock;
+export default CardDescr;

@@ -33,18 +33,12 @@ const cardsSlice = createSlice({
       state.items = state.items.filter(card => (card.id !== action.payload));
     },
     updateCard: (state, action: PayloadAction<ICard>) => {
-      state.items = state.items.map(card => {
-        if (card.id === action.payload.id) {
-          return action.payload;
-        }
-        return card;
-      });
+      state.items = state.items.map(card => (card.id === action.payload.id) ? action.payload : card);
     },
   },
   extraReducers: (builder) => {
     builder.addCase(columnsActions.deleteColumn, (state, action) => {
-      const columnId: string = action.payload;
-      state.items = state.items.filter(card => (card.columnId !== columnId));
+      state.items = state.items.filter(card => (card.columnId !== action.payload));
     })
   },
 });

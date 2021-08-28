@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { Form, Field } from 'react-final-form';
-import './Popup.css';
+import './AuthModal.css';
 import { useAppDispatch } from '../../redux/store';
 import { userActions } from '../../redux/features/user';
 import { InputField, Button } from '../UI';
+import { validators } from '../../utils';
 
-interface PopupProps {
+interface AuthModalProps {
 }
 
 interface FormValues {
   username: string;
 }
 
-const Popup: React.FC<PopupProps> = () => {
+const AuthModal: React.FC<AuthModalProps> = () => {
   const dispatch = useAppDispatch();
   const [popupVisible, setPopupVisible] = useState<boolean>(true);
 
@@ -21,8 +22,6 @@ const Popup: React.FC<PopupProps> = () => {
     dispatch(userActions.setUser(values.username));
     setPopupVisible(false);
   }
-
-  const required = (value: string) => (value ? undefined : 'Required');
 
   return (
     <div className={popupVisible ? 'popup' : 'popup popup_hidden'}>
@@ -34,7 +33,7 @@ const Popup: React.FC<PopupProps> = () => {
               <h2 className="auth-form__title">Enter your name</h2>
               <Field
                 name="username"
-                validate={required}
+                validate={validators.required}
                 placeholder={'Enter a name'}
                 autoFocus={true}
                 component={InputField}
@@ -54,4 +53,4 @@ const Popup: React.FC<PopupProps> = () => {
   );
 };
 
-export default Popup;
+export default AuthModal;

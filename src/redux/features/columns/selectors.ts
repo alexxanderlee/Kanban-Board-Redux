@@ -4,10 +4,10 @@ import { IColumn } from '../../../interfaces';
 
 export const getColumns = (state: RootState) => state.columns.items;
 
-const getId = (_: RootState, id: string) => id;
-
 export const getColumnById = createSelector(
-  getColumns,
-  getId,
-  (columns, id) => columns.find((column: IColumn) => (column.id === id))
+  (state: RootState, columnId: string) => ({ 
+    columns: getColumns(state),
+    columnId
+  }),
+  ({ columns, columnId }) => columns.find((column: IColumn) => (column.id === columnId))
 );

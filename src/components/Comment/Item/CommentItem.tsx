@@ -2,9 +2,9 @@ import React from 'react';
 import { Form, Field } from 'react-final-form';
 import dayjs from 'dayjs';
 import calendar from 'dayjs/plugin/calendar';
-import './Item.css';
+import './CommentItem.css';
 import { Button, TextAreaField } from '../../UI';
-import { required } from '../../../utils';
+import { validators } from '../../../utils';
 import { useAppDispatch } from '../../../redux/store';
 import { commentsActions } from '../../../redux/features/comments';
 import { IComment } from '../../../interfaces';
@@ -12,34 +12,39 @@ import { IComment } from '../../../interfaces';
 dayjs.extend(calendar);
 
 interface ICommentItemProps {
-  data: IComment;
+  comment: IComment;
 }
 
-const CommentItem: React.FC<ICommentItemProps> = ({ data }) => {
+const CommentItem: React.FC<ICommentItemProps> = ({ comment }) => {
   const dispatch = useAppDispatch();
   const [showEditForm, setShowEditForm] = React.useState<boolean>(false);
-  const date = dayjs(data.date).calendar(dayjs());
+  const date = dayjs(comment.date).calendar(dayjs());
 
   function deleteComment() {
-    dispatch(commentsActions.deleteComment(data.id));
+    dispatch(commentsActions.deleteComment(comment.id));
   }
 
   function submitEditForm(values: { text: string }) {
-    dispatch(commentsActions.editCommentText(data.id, values.text));
+    const payload: IComment = {
+      ...comment,
+      text: values.text,
+      isEdited: true
+    };
+    dispatch(commentsActions.updateComment(payload));
     setShowEditForm(false);
   }
 
   const editForm = (
     <Form
       onSubmit={submitEditForm}
-      initialValues={{ text: data.text }}
+      initialValues={{ text: comment.text }}
       render={({ handleSubmit, submitting, pristine }) => (
         <form onSubmit={handleSubmit} className="edit-comment__form">
           <Field
             name="text"
             rows={3}
             autoFocus={true}
-            validate={required}
+            validate={validators.required}
             component={TextAreaField}
           />
           <div className="edit-comment__btn">
@@ -51,28 +56,15 @@ const CommentItem: React.FC<ICommentItemProps> = ({ data }) => {
         </form>
       )}
     />
-      // <textarea
-      //   className="edit-comment__textarea"
-      //   value={editFormValue}
-      //   onChange={onChange}
-      // ></textarea>
-      // <button
-      //   className="edit-comment__btn edit-comment__btn_ok"
-      //   onClick={updateCommentText}
-      // >Save</button>
-      // <button
-      //   className="edit-comment__btn edit-comment__btn_cancel"
-      //   onClick={closeEditForm}
-      // >Cancel</button>
   );
 
   return (
     <div className="comment">
       <div className="comment__header">
         <div className="comment__info">
-          <div className="comment__author">{data.author}</div>
+          <div className="comment__author">{comment.author}</div>
           <div className="comment__date">{date}</div>
-          {data.isEdited && <i className="bi bi-pencil-fill comment__edited-icon" title="Edited"></i>}
+          {comment.isEdited && <i className="bi bi-pencil-fill comment__edited-icon" title="Edited"></i>}
         </div>
         {!showEditForm && (
           <div className="comment__btns">
@@ -81,7 +73,7 @@ const CommentItem: React.FC<ICommentItemProps> = ({ data }) => {
           </div>
         )}
       </div>
-      {showEditForm ? editForm : <div className="comment__text">{data.text}</div>}
+      {showEditForm ? editForm : <div className="comment__text">{comment.text}</div>}
     </div>
   );
 };

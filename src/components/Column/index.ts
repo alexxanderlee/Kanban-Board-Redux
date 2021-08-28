@@ -1,10 +1,10 @@
 import ColumnsList from './List';
 import ColumnItem from './Item';
-import AddColumnForm from './Form';
+import ColumnForm from './Form';
 
 export {
   ColumnItem,
-  AddColumnForm,
+  ColumnForm,
 };
 
 export default ColumnsList;
